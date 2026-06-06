@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Student Perspective</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght=0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* --- CSS Reset & Themes Framework --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        :root {
+            --bg-color: #ffffff;
+            --bg-stage: #fafafa;
+            --text-main: #191919;
+            --text-muted: #6b6b6b;
+            --accent-color: #242424;
+            --border-color: #f2f2f2;
+            --footer-bg: #1a1a1a;
+            --footer-text: #aeaeae;
+            --font-sans: 'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --modal-bg: #ffffff;
+            --accent-green: #25d366;
+            --accent-red: #e02424;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f0f0f;
+            --bg-stage: #1a1a1a;
+            --text-main: #f5f5f5;
+            --text-muted: #9e9e9e;
+            --accent-color: #f5f5f5;
+            --border-color: #262626;
+            --footer-bg: #080808;
+            --footer-text: #7a7a7a;
+            --modal-bg: #161616;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Medium-Style Sticky Header --- */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 75px;
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 1000;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .header-brand {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+        
+        .theme-toggle-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .theme-toggle-btn:hover {
+            color: var(--text-main);
+            border-color: var(--text-main);
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 16px;
+        }
+        .header-nav button {
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+            cursor: pointer;
+            font-family: var(--font-sans);
+        }
+        .header-nav button:hover {
+            color: var(--text-main);
+        }
+
+        /* --- Layout Grid Wrapper --- */
+        .layout-grid {
+            margin-top: 75px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            gap: 24px;
+        }
+
+        .app-container {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            padding: 24px;
+        }
+
+            /* --- Strategic Non-Disruptive Ad Zones --- */
+        .ad-placeholder {
+            width: 100%;
+            background-color: var(--bg-stage);
+            border: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 500;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .ad-top {
+            height: 90px;
+            max-width: 728px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Sidebar layout default (hidden on smaller screens) */
+        .ad-sidebar {
+            display: none; 
+            width: 160px;
+            height: 600px;
+            background-color: var(--bg-stage);
+            border: 1px dashed var(--border-color);
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: sticky;
+            top: 100px; 
+            align-self: flex-start; 
+            margin-top: 44px;
+        }
+
+        /* Mid-Slide Inline Ad Stage Container */
+        .ad-break-stage {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-stage);
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px dashed var(--border-color);
+        }
+
+
+
+        /* --- Homepage / Feed View --- */
+        #homepage-view {
+            width: 100%;
+            animation: fadeIn 0.4s ease;
+            display: block;
+        }
+        .feed-title {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+        .article-card {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            position: relative;
+        }
+        .card-top-row {
+            display: none !important; /*🔥🔥🔥Hide AD display: flex;*/
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .article-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        
+        .status-badge {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .status-badge.unread {
+            background-color: rgba(37, 211, 102, 0.1);
+            color: var(--accent-green);
+        }
+        .status-badge.read {
+            background-color: var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .article-title {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        .article-excerpt {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .article-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .feed-metric-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* --- Article Slideshow Engine View --- */
+        #article-view {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.4s ease;
+        }
+        .article-header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .header-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .slide-progress {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        
+        .action-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .metric-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--text-muted);
+            padding: 4px 8px;
+        }
+        .interactive-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: var(--font-sans);
+            color: var(--text-muted);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            user-select: none;
+        }
+        .interactive-btn:hover {
+            color: var(--text-main);
+            border-color: var(--text-main);
+        }
+        .interactive-btn.liked {
+            color: var(--accent-red);
+            border-color: var(--accent-red);
+            background-color: rgba(224, 36, 36, 0.05);
+        }
+
+        .main-story-title {
+            font-family: var(--font-serif);
+            font-size: 28px;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        /* --- Navigation Layout --- */
+        .stage-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            margin: 24px 0;
+            width: 100%;
+        }
+        .nav-arrow {
+            background: none;
+            border: none;
+            font-size: 36px;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 20px 10px;
+            user-select: none;
+            z-index: 10;
+        }
+        .nav-arrow:hover:not(:disabled) {
+            color: var(--text-main);
+            transform: scale(1.1);
+        }
+        .nav-arrow:disabled {
+            opacity: 0.1;
+            cursor: not-allowed;
+        }
+        
+        .slide-stage {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: calc(100% - 100px);
+            min-height: 300px;
+            background-color: var(--bg-stage);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .slide-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-content-block { margin-top: 32px; }
+        .slide-headline {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        .slide-body-text { font-size: 17px; line-height: 1.65; }
+
+        .action-bar {
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 24px;
+            display: flex;
+            justify-content: center;
+        }
+        .mega-next-btn {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 99px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* --- Modals Framework --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-box {
+            background-color: var(--modal-bg);
+            width: 100%; max-width: 500px; border-radius: 8px; padding: 32px;
+            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            animation: modalPop 0.3s ease;
+        }
+        .modal-close-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: none; border: none; font-size: 24px;
+            color: var(--text-muted); cursor: pointer; line-height: 1;
+        }
+        .modal-close-btn:hover { color: var(--text-main); }
+        .modal-title { font-family: var(--font-serif); font-size: 24px; margin-bottom: 16px; }
+        .modal-body { font-size: 15px; line-height: 1.6; color: var(--text-muted); max-height: 400px; overflow-y: auto; }
+
+        /* --- Footer --- */
+        .premium-footer {
+            background-color: var(--footer-bg); color: var(--footer-text);
+            width: 100%; padding: 60px 24px 40px 24px; margin-top: auto; 
+            border-top: 1px solid var(--border-color); position: relative; z-index: 1100; 
+        }
+        .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+        .footer-newsletter-section { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 32px; }
+        .newsletter-info { max-width: 450px; }
+        .newsletter-info h4 { font-family: var(--font-serif); font-size: 20px; color: #ffffff; margin-bottom: 8px; }
+        .newsletter-info p { font-size: 14px; color: var(--footer-text); line-height: 1.5; }
+        .newsletter-form { display: flex; width: 100%; max-width: 400px; gap: 8px; }
+        .newsletter-input { flex: 1; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 16px; border-radius: 4px; color: #ffffff; font-size: 14px; outline: none; }
+        .newsletter-submit-btn { background-color: #ffffff; color: #1a1a1a; border: none; padding: 0 20px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+        .newsletter-submit-btn:hover {
+            background-color: #e5e5e5;
+        }
+        .footer-top-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .footer-brand { font-family: var(--font-serif); font-size: 18px; font-weight: 600; color: #ffffff; }
+        .whatsapp-link { display: inline-flex; align-items: center; gap: 8px; color: #25d366; text-decoration: none; font-size: 14px; font-weight: 600; border: 1px solid rgba(37, 211, 102, 0.3); padding: 8px 16px; border-radius: 20px; }
+        .whatsapp-link:hover {
+            background-color: rgba(37, 211, 102, 0.1);
+            transform: translateY(-1px);
+        }
+        .footer-bottom-row { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; display: flex; justify-content: space-between; font-size: 12px; }
+
+        .toast-notification {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background-color: var(--text-main); color: var(--bg-color); padding: 12px 24px;
+            border-radius: 4px; font-size: 14px; font-weight: 500; z-index: 3000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+        .toast-notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* --- CSS Animation Utilities --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        /* --- Media Queries (Cleanly separates big screens from mobile) --- */
+        @media (min-width: 1200px) {
+            .ad-sidebar {
+                display: flex; /* Sidebars ONLY show here */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-arrow { font-size: 28px; padding: 10px 4px; }
+            .slide-stage { max-width: calc(100% - 70px); min-height: 200px; }
+            .slide-img { height: 250px; }
+            .main-story-title { font-size: 24px; }
+            .slide-headline { font-size: 20px; }
+            .slide-body-text { font-size: 15px; }
+            .mega-next-btn { width: 100%; }
+            .footer-newsletter-section { flex-direction: column; align-items: stretch; }
+            .newsletter-form { max-width: 100%; }
+            .footer-top-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .footer-bottom-row { flex-direction: column; gap: 10px; }
+            .header-meta-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .action-group { width: 100%; justify-content: flex-start; }
+        }
+
+        /* 🔥🔥🔥🔥--- GLOBAL AD BLOCKING (STEALTH MODE FIX) ---🔥🔥🔥🔥 */
+        .ad-placeholder,
+        .ad-sidebar{
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="sticky-header">
+        <div class="header-left">
+            <button class="header-brand" onclick="showHome()" style="background:none; border:none; text-align:left; padding:0;">The Student Perspective</button>
+            <button class="theme-toggle-btn" id="theme-btn" onclick="toggleTheme()">Dark Mode</button>
+        </div>
+        <nav class="header-nav">
+            <button onclick="openModal('about-modal')">About</button>
+            <button onclick="openModal('privacy-modal')">Privacy</button>
+        </nav>
+    </header>
+
+    <div class="modal-overlay" id="about-modal">
+        <div class="modal-box">
+            <button class="modal-close-btn" onclick="closeModal('about-modal')">&times;</button>
+            <h4 class="modal-title">The Perspective Behind the Lens</h4>
+            <p class="modal-body">
+                Everything you read on this site is born from my own experience and told from my perspective. These aren't generic internet tips written by an algorithm; they are the exact lessons, financial wake-up calls, and daily realities I have personally gone through—and am still navigating right now.<br><br>
+                Welcome to the student perspective.
+            </p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="privacy-modal">
+        <div class="modal-box">
+            <button class="modal-close-btn" onclick="closeModal('privacy-modal')">&times;</button>
+            <h4 class="modal-title">Privacy Policy</h4>
+            <div class="modal-body">
+                <p style="margin-bottom:12px;"><strong>Effective Date: June 2026</strong></p>
+                <p style="margin-bottom:12px;">Your privacy is highly valued. This policy outlines how your data is handled across this platform.</p>
+                <h5 style="color:var(--text-main); margin:16px 0 8px 0; font-size:16px;">1. Information We Collect</h5>
+                <p style="margin-bottom:12px;">We only collect data that you directly provide to us. Specifically, when you sign up via our footer to receive article alerts, we store your email address securely.</p>
+                <h5 style="color:var(--text-main); margin:16px 0 8px 0; font-size:16px;">2. Local Infrastructure Storage Framework</h5>
+                <p style="margin-bottom:12px;">To maintain an ultra-fast environment without remote database tracking profiles, we utilize minor browser LocalStorage keys. This handles storing personal interface state features (dark mode preferences) and marking whether you have read a story locally on your own machine.</p>
+                <h5 style="color:var(--text-main); margin:16px 0 8px 0; font-size:16px;">3. Global Metrics Cloud Framework</h5>
+                <p style="margin-bottom:12px;">Live total views and story likes are stored securely inside an encrypted cloud infrastructure provider (Supabase). This count is completely aggregated, anonymized, and contains zero tracking cookies or personal indicators.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-notification" id="toast-alert">Link copied to clipboard!</div>
+
+    <div class="layout-grid">
+        
+        <div class="ad-sidebar">🔥🔥🔥Advertisement</div>
+
+        <main class="app-container">
+            <div class="content-wrapper">
+                <div class="ad-placeholder ad-top">🔥🔥🔥Responsive Banner Advertisement</div>
+
+            <section id="homepage-view">
+                <h1 class="feed-title">Stories & Lessons<p style="font-size: 13px;text-transform: uppercase;letter-spacing: 1px;font-weight: 600;color: var(--text-muted);">From The Mind Of A Student</p></h1>
+                <div id="feed-container"></div>
+            </section>
+
+            <section id="article-view">
+                <div class="article-header">
+                    <div class="header-meta-row">
+                        <div class="slide-progress" id="progress-tracker">Slide 1 of 7</div>
+                        
+                        <div class="action-group">
+                            <div class="metric-display">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <span id="view-counter-node">0</span>
+                            </div>
+                            <button class="interactive-btn" id="like-btn-node" onclick="toggleLikeCurrentStory()">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                <span id="like-label-node">Like</span> (<span id="like-counter-node">0</span>)
+                            </button>
+                            <button class="interactive-btn" onclick="shareCurrentStory()">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                Share Story
+                            </button>
+                        </div>
+                    </div>
+                    <h2 class="main-story-title" id="story-main-title">Loading...</h2>
+                </div>
+
+                <div class="stage-container">
+                    <button class="nav-arrow" id="left-arrow-btn" onclick="prevSlide()">&#8249;</button>
+                    <div class="slide-stage" id="media-viewport"></div>
+                    <button class="nav-arrow" id="right-arrow-btn" onclick="nextSlide()">&#8250;</button>
+                </div>
+
+                <div class="slide-content-block" id="text-viewport">
+                    <h3 class="slide-headline" id="stage-headline">Loading...</h3>
+                    <p class="slide-body-text" id="stage-body">Loading...</p>
+                </div>
+
+                <div class="action-bar">
+                    <button class="mega-next-btn" id="mega-action-btn" onclick="nextSlide()">Next Lesson &rarr;</button>
+                </div>
+            </section>
+        </div>
+        </main>
+
+        <div class="ad-sidebar">🔥🔥🔥Advertisement</div>
+
+    </div> 
+
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div class="footer-newsletter-section">
+                <div class="newsletter-info">
+                    <h4>Join the Perspective</h4>
+                    <p>Get a direct, quiet alert sent straight to your inbox the second a new unfiltered student lesson drops.</p>
+                </div>
+                <form id="newsletter-form" class="newsletter-form">
+                    <input type="email" name="email" required placeholder="Enter your email address" class="newsletter-input" id="subscriber-email">
+                    <button type="submit" class="newsletter-submit-btn">Notify Me</button>
+                </form>
+                <div id="form-status" class="form-status-msg" style="display: none; margin-top: 10px; font-size: 0.9rem;"></div>
+            </div>
+            <div class="footer-top-row">
+                <div class="footer-brand">The Student Perspective.</div>
+                <a href="https://wa.me/0638253926" target="_blank" class="whatsapp-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display:inline-block; vertical-align:middle;">
+                        <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.907h.004c4.368 0 7.926-3.558 7.93-7.93a7.86 7.86 0 0 0-2.327-5.645ZM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592Zm3.69-4.836c-.203-.102-1.202-.593-1.387-.662-.185-.069-.32-.103-.453.102-.133.205-.514.662-.63.793-.117.13-.234.146-.438.043-.204-.102-.862-.318-1.642-1.016-.607-.542-1.017-1.213-1.136-1.417-.119-.204-.013-.314.089-.416.092-.092.204-.24.306-.359.102-.12.137-.2.205-.339.068-.14.034-.263-.017-.365-.052-.102-.453-1.1-.619-1.5-.162-.395-.326-.341-.453-.341-.118-.003-.254-.004-.391-.004-.137 0-.36.052-.55.252-.19.2-.724.709-.724 1.729 0 1.02.742 2.01 1.846 2.155 1.1.146 2.154-.728 2.547-1.18.393-.453.784-.905.784-1.357 0-.452-.204-.66-.29-.747-.085-.087-.186-.119-.289-.119Z"/>
+                    </svg>
+                Contact via WhatsApp
+            </a>
+            </div>
+            <div class="footer-bottom-row">
+                <div>&copy; 2026 The Student Perspective. All rights reserved.</div>
+                <div style="color:var(--text-muted)">Built via Static Infrastructure Architecture</div>
+            </div>
+        </div>
+    </footer>
+
+   <script>
+        // --- 1. SUPABASE CONNECTION CONFIG ---
+        const SUPABASE_URL = "https://wuarlxxhfpvjzjkflzbg.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1YXJseHhoZnB2anpqa2ZsemJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjM5NDUsImV4cCI6MjA5NjI5OTk0NX0.EUYBiKzk7JcU6cJH9YMLGWUEY3sMBFbz0KLNouYQI_w";
+        
+        let supabaseClient = null;
+        
+        if (window.supabase) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                auth: { persistSession: false }
+            });
+        }
+
+        let cloudMetrics = {};
+        let inAdBreak = false; // Persistent memory flag for intermediate ad states
+
+        const articlesDatabase = [
+            {
+                id: "jumping-new-city",
+                tag: "SOCIETY & MIND",
+                title: "7 Unfiltered Lessons From Jumping Into A New City With Zero Plan",
+                excerpt: "Waiting for the perfect plan is a trap. Here is how survival instincts kick in when you take a blind leap into a completely fresh environment.",
+                slides: [
+                    { headline: "The Blind Leap", body: "Waiting for the perfect plan is a trap. Sometimes, the smartest thing you can do for your growth is to take a blind leap into a completely new environment—even if your residence status is still pending. When you force yourself into the deep end, your survival instincts kick in and you figure out the logistics on the fly.", img: "images/travel.jpg" },
+                    { headline: "The Network Cheat Code", body: "Being an introvert doesn't mean you can afford to lock yourself away. When you are dropped into a massive, unfamiliar city, striking up a conversation with a returning student can save your life. Put pride aside, ask questions, and build a quick network—strangers hold the maps you didn't know you needed.", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "Tech Adaptability", body: "A massive city with towering buildings and busy streets can overwhelm you instantly if you let it. Lean into your tech-savvy side immediately. Apps like Uber aren't luxuries when you're lost; they are essential navigation tools to get you where you need to be efficiently under pressure.", img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "Strategic Co-Signing", body: "When school accommodation drags out for a week, standing alone at the gate gets you nowhere. Look for someone in the exact same boat and team up. Splitting the cost of a basic, single-bed BnB room keeps you off the streets and pools your capital while you hunt for private housing daily.", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "The Daily Expense Leak", body: "Watch those small coins because they add up incredibly fast. When you are stuck walking the streets looking for a flat with no kitchen to cook in, convenience is an expensive trap. Taking Ubers constantly and eating out for every single meal will completely eat through your capital before the semester even starts.", img: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "The Emergency Fund Reality", body: "Tiredness will make you make financial moves under pressure. Securing a private flat usually means fronting a massive, unexpected security deposit. This is the moment you realize that having liquid capital or backing is the only thing standing between a secure room and another night on a shared hotel floor.", img: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "Elevating Your Baseline", body: "Stepping out of a small hometown into a modern city block changes your entire perspective on life. The ultimate takeaway? Never let fear paralyze you from taking a massive risk. Pivot when things go wrong, guard your daily spending habits ruthlessly, and trust yourself to handle the chaos.", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" }
+                ]
+            },
+            {
+                id: "adulting-shock",
+                tag: "ACADEMICS & LIFESTYLE",
+                title: "7 Harsh Realities Of Being a College Student and Surviving The Mental Drain",
+                excerpt: "The shift from high school success to running an independent household while keeping up with class metrics is a massive shock. Here is how to keep the machine running.",
+                slides: [
+                    { headline: "The Responsibility Blindspot", body: "When mapping out your university strategy, it’s easy to focus solely on the academics. The trap is forgetting that you aren't just entering a higher level of education; you are entering independent survival. If you don't factor in the daily time needed to cook, clean, and manage your life, your perfect study schedule will crumble the moment reality hits.", img: "drained.jpg" },
+                    { headline: "The Ghost of Your Past Self", body: "Stop comparing your current output to the high school version of you. Back then, you had a built-in support system and zero domestic responsibilities. Competing with a past version of yourself who had nothing to do but study is unfair, unrealistic, and a guaranteed way to burn out before the first semester ends.", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "The Danger of Winging It", body: "In high school, you can get away with winging your schedule and hoping for the best. In varsity, that approach is academic suicide. When the back-to-back test weeks hit, a lack of a strict, comprehensive routine will leave you completely overwhelmed, paralyzing you to the point where you just sit and do nothing.", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "Active Escapism", body: "When the mental load gets too heavy, you need a healthy outlet to anchor you. Finding a physical hobby—like hitting the gym—isn’t a distraction from your studies; it is a necessary reset button for your brain. You need a space where your value isn't tied to a percentage or a grade.", img: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "The Peer Mirage", body: "It is incredibly draining to look at your peers studying day and night and ask yourself, 'Why don't I read like them?'. Understand this: everyone projects a certain image. Watching others pull all-nighters will make you feel like you are falling behind even when you are perfectly on track. Focus entirely on your own execution.", img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "The 'Wrong Question' Spiral", body: "When your mental health is weakened by self-doubt, every single question you get wrong feels like a definitive verdict that you know nothing. Do not let a single academic slip-up solidifying a false narrative in your head. A mistake is just data on what to fix, not a reflection of your intelligence.", img: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "The Power of Sonder", body: "No matter how heavy the imposter syndrome gets, never stop showing up. When you feel completely isolated in your struggle, look around the campus and remember the concept of Sonder. Every single person walking past you is fighting an invisible battle, dealing with their own chaos, and trying to figure it out too. You are absolutely not alone.", img: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80" }
+                ]
+            }
+            // ,
+            // {
+            //     id: "silent-anxiety-freedom",
+            //     tag: "HEALTH & WEALTH",
+            //     title: "7 Lessons on Navigating Silent Anxiety and Reclaiming Freedom",
+            //     excerpt: "When the academic engine glitches, physical anxiety can surprise you out of nowhere. Here is a strategy on how to ground your nervous system.",
+            //     slides: [
+            //         { headline: "The Trap of Past Physical Baseline", body: "Your body changes under chronic academic stress. Trying to push yourself into high-intensity physical activity after a long hiatus—just because 'you used to do it easily'—is a massive shock to the system. When you ignore how much your academic routine has drained you, your body will eventually sound a severe alarm to force you to slow down.", img: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=800&q=80" },
+            //         { headline: "The Day the Baseline Glitched", body: "A sudden, acute anxiety response is one of the most terrifying things a person can experience. When your heart suddenly races out of control, your vision narrows, and dizziness sets in, your mind instantly jumps to the worst-case scenario. In that moment of absolute panic, you have to find a way to ground yourself physically before your thoughts spiral completely out of reach.", img: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=800&q=80" },
+            //         { headline: "Emergency Grounding Mechanics", body: "When your body enters a severe fight-or-flight response, you cannot argue with it using logic; you have to use physics. Elevating your feet to assist blood circulation and forcing yourself to lie still while focusing on the sky is a fundamental emergency reset. Learn basic physical grounding techniques—they are literal lifesavers when your nervous system overloads.", img: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80" },
+            //         { headline: "The Mind-Body Trust Fracture", body: "The worst part of a severe physical anxiety event is the aftermath. It breaks the trust between your mind and your body. Suddenly, the simple act of sitting down to read and absorb information can trigger a phantom heart-rate spike, simply because your brain begins to mistake deep mental focus for physical stress.", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80" },
+            //         { headline: "Naming the Silent Monster", body: "Anxiety is a word we hear on TV and social media constantly, but you never truly understand it until it hits you personally. Researching your symptoms and finally labelling what you are experiencing isn't a weakness—it’s the first step to taking your power back. When you name the monster, it loses its ability to surprise you.", img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" },
+            //         { headline: "The 'Forced Exposure' Counter-Strategy", body: "When anxiety tries to make your world small and hyper-sensitive, your natural instinct is to hide away in your room. You have to aggressively fight that urge. Force yourself out of your comfort zone, put yourself in social spaces, talk to people, and actively break the isolation trap before burnout can set its roots.", img: "images/walk.jpg" },
+            //         { headline: "The Cost of a Mental Reset", body: "As a student living on a tight budget, spending money on things that feel 'frivolous' or non-essential can make you feel guilty. But sometimes, paying for a solo outdoor activity or a quick escape into nature is a mandatory investment in your sanity. Solitary time away from your desk acts as a hard mental reset—it reminds you exactly what you are surviving and fighting for: your ultimate freedom.", img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80" }
+            //     ]
+            // },
+            //             {
+            //     id: "truths-about-second-year",
+            //     tag: "ACADEMICS & HEALTH",
+            //     title: "7 Brutal Truths About Second-Year",
+            //     excerpt: "Learning from mistakes is a good skill to have, and getting over mistakes quickly is a must have skill because your future depends on it.",
+            //     slides: [
+            //         { headline: "The Illusion of Safety", body: "Landing university accommodation feels like winning the lottery, and it removes a massive layer of survival stress. But don't let comfort breed complacency. The peace of mind of having a roof over your head can easily trick you into lowering your guard just as the academic stakes are about to double.", img: "images/dorm.jpg" },
+            //         { headline: "The Two-Week Blitz", body: "Second year doesn't give you a grace period. In first year, you have time to ease into the syllabus; in second year, you are writing high-stakes tests within the first fourteen days. If you aren't mentally locked in from day one, the sheer pace of the curriculum will leave you playing catch-up before you've even bought your textbooks.", img: "images/intense.jpg" },
+            //         { headline: "The End of 'Winging It' Marks", body: "In the past, you might have been able to pull a decent mark out of a hat even with mediocre preparation. Second year is a ruthless mirror—it gives you back exactly what you put in. The buffer zone is gone, and relying on raw talent without intense execution will result in a quick reality check.", img: "images/blur.jpg" },
+            //         { headline: "The Administrative Nightmare", body: "The dumbest academic mistakes are often the most painful. Overlooking a module on your schedule and studying for the wrong test is a gut-wrenching feeling that will fill you with instant rage. You cannot afford to be disorganized; verify your exam codes and dates like your degree depends on it—because it does.", img: "images/shock.jpg" },
+            //         { headline: "The 5% Grace", body: "When an administrative blunder causes you to completely tank a test, you have to learn the art of the quick pivot. Take a breath and look at the math. If it’s only worth 5% of your year mark, brush it off as an expensive lesson. Forgive yourself for the mistake, lock down the strategy, and make sure it never happens again.", img: "images/red.png" },
+            //         { headline: "The Body vs. The Mind Memory", body: "We often treat our minds and bodies as separate entities, but they keep score of each other's stress. When you are pushing your brain to absorb massive amounts of complex information under pressure, your baseline stress is already high. If you try to force your body to perform like it did months ago without building back up, the system will glitch.", img: "images/stress.jpg" },
+            //         { headline: "Optimism Under Fire", body: "Staying optimistic in university isn't about pretending everything is perfect; it’s about knowing you can survive the chaos. When reality hits you from multiple angles, the goal is to ground yourself in the present moment. You are getting older, the stakes are getting higher, but you are also getting significantly stronger.", img: "images/student.png" }
+            //     ]
+            // }
+        ];
+
+        let activeArticle = null;
+        let activeSlideIndex = 0;
+
+        const homeView = document.getElementById("homepage-view");
+        const articleView = document.getElementById("article-view");
+        const feedContainer = document.getElementById("feed-container");
+        const toastAlert = document.getElementById("toast-alert");
+        
+        const progressTracker = document.getElementById("progress-tracker");
+        const storyMainTitle = document.getElementById("story-main-title");
+        const mediaViewport = document.getElementById("media-viewport");
+        const textViewport = document.getElementById("text-viewport");
+        const megaActionBtn = document.getElementById("mega-action-btn");
+        const leftArrowBtn = document.getElementById("left-arrow-btn");
+        const rightArrowBtn = document.getElementById("right-arrow-btn");
+
+        const viewCounterNode = document.getElementById("view-counter-node");
+        const likeBtnNode = document.getElementById("like-btn-node");
+        const likeLabelNode = document.getElementById("like-label-node");
+        const likeCounterNode = document.getElementById("like-counter-node");
+
+        function formatMetric(num) {
+            if (!num || isNaN(num)) return "0";
+            if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+            return num.toString();
+        }
+
+        articlesDatabase.forEach(a => { 
+            cloudMetrics[a.id] = { views: 0, likes: 0, completions: 0 }; 
+        });
+
+        async function fetchGlobalMetrics() {
+            if (!supabaseClient) return;
+            try {
+                const { data, error } = await supabaseClient.from('story_metrics').select('*');
+                if (error) throw error;
+                if (data) {
+                    data.forEach(row => {
+                        cloudMetrics[row.story_id] = { 
+                            views: Number(row.views) || 0, 
+                            likes: Number(row.likes) || 0,
+                            completions: Number(row.completions) || 0
+                        };
+                    });
+                }
+            } catch (err) {
+                console.warn("Database framework relying on local mirror memory:", err);
+            }
+        }
+
+        async function incrementCloudView(storyId) {
+            if (cloudMetrics[storyId]) cloudMetrics[storyId].views++;
+            if (!supabaseClient) return;
+            try {
+                await supabaseClient.rpc('increment_views', { row_id: storyId });
+            } catch(e) { console.error("Cloud logging fail:", e); }
+        }
+
+        async function adjustCloudLikes(storyId, incrementValue) {
+            if (!supabaseClient) return;
+            try {
+                await supabaseClient.rpc('adjust_likes', { row_id: storyId, val: incrementValue });
+            } catch(e) { console.error("Cloud log modification fail:", e); }
+        }
+
+        async function trackStoryCompletion(storyId) {
+            if (!supabaseClient) return;
+            const completedKey = `completed_session_${storyId}`;
+            if (sessionStorage.getItem(completedKey)) return;
+            try {
+                await supabaseClient.rpc('increment_completions', { row_id: storyId });
+                sessionStorage.setItem(completedKey, 'true');
+                if (cloudMetrics[storyId]) cloudMetrics[storyId].completions++;
+            } catch (error) {
+                console.error("Failed to commit milestone payload:", error);
+            }
+        }
+
+        function renderHomepageFeed() {
+            if (!feedContainer) return;
+            feedContainer.innerHTML = "";
+            
+            articlesDatabase.forEach((art, index) => {
+                const isRead = localStorage.getItem(`read_${art.id}`) === "true";
+                const stats = cloudMetrics[art.id] || { views: 0, likes: 0 };
+                
+                const card = document.createElement("div");
+                card.className = "article-card";
+                card.onclick = () => loadArticle(art.id);
+                
+                card.innerHTML = `
+                    <div class="card-top-row">
+                        <div class="article-tag">${art.tag}</div>
+                        <div class="status-badge ${isRead ? 'read' : 'unread'}">${isRead ? 'Read' : 'Not Read'}</div>
+                    </div>
+                    <div class="article-title">${art.title}</div>
+                    <div class="article-excerpt">${art.excerpt}</div>
+                    <div class="article-meta">
+                        <span>7 min read</span> &middot; 
+                        <span class="feed-metric-inline">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> ${formatMetric(stats.views)} views
+                        </span> &middot;
+                        <span class="feed-metric-inline">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> ${formatMetric(stats.likes)} likes
+                        </span>
+                    </div>
+                `;
+                feedContainer.appendChild(card);
+
+                // Inline Organic Story Spacer Ad Injection
+                if (index === 0) {
+                    const adCard = document.createElement("div");
+                    adCard.className = "article-card sponsored-ad-card";
+                    // adCard.innerHTML = `
+                    //     <div class="card-top-row">
+                    //         <div class="article-tag" style="background: #e0e0e0; color: #555; font-weight: 700;">🔥🔥🔥SPONSORED</div>
+                    //         <div class="status-badge read" style="background: transparent; border: 1px solid currentColor;">Featured Partner</div>
+                    //     </div>
+                    //     <div class="article-title" style="opacity: 0.95;">Optimize Your Daily Workflow Workspace</div>
+                    //     <div class="article-excerpt">Premium, distraction-free developmental setups designed specifically for high-output engineering minds. Upgrade your baseline focus engine today.</div>
+                    //     <div class="article-meta">
+                    //         <span style="font-weight: 600; letter-spacing: 0.05em;">PROMOTED LINK</span>
+                    //     </div>
+                    // `;
+                    adCard.onclick = (e) => { e.stopPropagation(); window.open("https://www.google.com", "_blank"); };
+                    feedContainer.appendChild(adCard);
+                }
+            });
+        }
+
+        function showHome() {
+            if (articleView) articleView.style.display = "none";
+            if (homeView) homeView.style.display = "block";
+            activeArticle = null;
+            inAdBreak = false; 
+            renderHomepageFeed();
+            window.scrollTo(0,0);
+        }
+
+        async function loadArticle(id) {
+            activeArticle = articlesDatabase.find(art => art.id === id);
+            if (!activeArticle) return;
+            activeSlideIndex = 0;
+            inAdBreak = false; 
+            
+            if (storyMainTitle) storyMainTitle.innerText = activeArticle.title;
+            if (homeView) homeView.style.display = "none";
+            if (articleView) articleView.style.display = "block";
+
+            localStorage.setItem(`read_${activeArticle.id}`, "true");
+            await incrementCloudView(activeArticle.id);
+            
+            updateInteractiveMetricsUI();
+            renderSlideState();
+            window.scrollTo(0,0); 
+        }
+
+        function updateInteractiveMetricsUI() {
+            if (!activeArticle) return;
+            const stats = cloudMetrics[activeArticle.id] || { views: 0, likes: 0 };
+
+            if (viewCounterNode) viewCounterNode.innerText = formatMetric(stats.views);
+            if (likeCounterNode) likeCounterNode.innerText = formatMetric(stats.likes);
+
+            const hasLiked = localStorage.getItem(`like_state_${activeArticle.id}`) === "true";
+            if (likeBtnNode && likeLabelNode) {
+                if (hasLiked) {
+                    likeBtnNode.classList.add("liked");
+                    likeLabelNode.innerText = "Liked";
+                } else {
+                    likeBtnNode.classList.remove("liked");
+                    likeLabelNode.innerText = "Like";
+                }
+            }
+        }
+
+        async function toggleLikeCurrentStory() {
+            if (!activeArticle) return;
+            const hasLiked = localStorage.getItem(`like_state_${activeArticle.id}`) === "true";
+            let incrementValue = 0;
+
+            if (hasLiked) {
+                localStorage.setItem(`like_state_${activeArticle.id}`, "false");
+                incrementValue = -1;
+            } else {
+                localStorage.setItem(`like_state_${activeArticle.id}`, "true");
+                incrementValue = 1;
+            }
+
+            if (cloudMetrics[activeArticle.id]) {
+                cloudMetrics[activeArticle.id].likes = Math.max(0, cloudMetrics[activeArticle.id].likes + incrementValue);
+            }
+            
+            updateInteractiveMetricsUI();
+            await adjustCloudLikes(activeArticle.id, incrementValue);
+        }
+
+        function renderSlideState() {
+            const totalSlides = activeArticle.slides.length;
+            
+            // Render the Virtual Interstitial Mid-Slide Ad Container (Fires on the 4th action window)
+            if (inAdBreak) {
+                if (progressTracker && mediaViewport && textViewport && megaActionBtn) {
+                    progressTracker.innerText = `Advertisement`;
+                mediaViewport.className = "ad-break-stage";
+                mediaViewport.innerHTML = `Mid-Story Inline Banner Advertisement`;
+                
+                textViewport.innerHTML = `
+                    <h3 class="slide-headline" style="text-align:center;">Support Our Platform</h3>
+                    <p class="slide-body-text" style="text-align:center; color:var(--text-muted);">This non-intrusive placement keeps our long-form storytelling independent and free.</p>
+                `;
+                megaActionBtn.innerHTML = "Skip Ad &rarr;";
+                }
+                if (leftArrowBtn) leftArrowBtn.disabled = false;
+                return;
+            }
+
+            const currentData = activeArticle.slides[activeSlideIndex];
+            
+            if (progressTracker && mediaViewport && textViewport && megaActionBtn) {
+                progressTracker.innerText = `Slide ${activeSlideIndex + 1} of ${totalSlides}`;
+                mediaViewport.className = "slide-stage";
+                mediaViewport.innerHTML = `<img src="${currentData.img}" alt="Visual Narrative" class="slide-img" id="stage-image">`;
+                
+                textViewport.innerHTML = `
+                    <h3 class="slide-headline">${currentData.headline}</h3>
+                    <p class="slide-body-text">${currentData.body}</p>
+                `;
+
+                // if (activeSlideIndex < totalSlides - 1) {
+                //     textViewport.innerHTML += `
+                //         <div class="inline-viewport-ad" style="margin-top: 2rem; padding-top: 0.75rem; border-top: 1px dashed #ddd; font-size: 0.82rem; opacity: 0.7;">
+                //             <span style="font-weight: bold; font-size: 0.7rem; letter-spacing:1px; margin-right:0.25rem;">[AD]</span> 
+                //             <a href="https://www.google.com" target="_blank" style="color: inherit; text-decoration: underline;">🔥🔥🔥Build structured equity early. Explore global exchange-traded options and index frameworks cleanly.</a>
+                //         </div>
+                //     `;
+                // }
+                
+                if (activeSlideIndex === totalSlides - 1) {
+                    megaActionBtn.innerHTML = "Finish & Return Home &larr;";
+                    trackStoryCompletion(activeArticle.id);
+
+                    // textViewport.innerHTML += `
+                    //     <div class="terminal-billboard-ad" style="margin-top: 2rem; padding: 1.25rem; background: rgba(0,0,0,0.02); border-radius: 6px; border: 1px solid #eee;">
+                    //         <small style="display:block; margin-bottom: 0.25rem; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; font-weight:600; opacity: 0.5;">Sponsored Milestone Insight</small>
+                    //         <h4 style="margin: 0 0 0.5rem 0; font-size: 1.05rem;">Ready to execute your next strategic leap?</h4>
+                    //         <p style="margin: 0; font-size: 0.88rem; opacity: 0.85; line-height:1.4;">🔥🔥🔥Access specialized toolkits and student-centric support assets built to streamline relocation friction. <a href="https://www.google.com" target="_blank" style="text-decoration: underline; font-weight: bold; color: inherit;">Learn More &rarr;</a></p>
+                    //     </div>
+                    // `;
+                } else {
+                    megaActionBtn.innerHTML = "Next Lesson &rarr;";
+                }
+            }
+            if (leftArrowBtn) leftArrowBtn.disabled = (activeSlideIndex === 0);
+        }
+
+        // Handles transition states sequentially without breaking slide data mapping bounds
+        function nextSlide() {
+            if (inAdBreak) {
+                inAdBreak = false;
+                activeSlideIndex++; // Safe transition directly onto Slide Index 4
+                renderSlideState();
+                return;
+            }
+            
+            if (activeSlideIndex === 3) { // After viewing the 4th slide (Index 3), inject ad break
+                inAdBreak = true;
+                renderSlideState();
+                return;
+            }
+
+            if (activeSlideIndex === activeArticle.slides.length - 1) {
+                showHome();
+                return;
+            }
+            activeSlideIndex++;
+            renderSlideState();
+        }
+
+        function prevSlide() {
+            if (inAdBreak) {
+                inAdBreak = false;
+                renderSlideState(); // Falls back onto Slide Index 3 seamlessly
+                return;
+            }
+            
+            if (activeSlideIndex === 4) { // Catch backward transit and present the ad break step
+                inAdBreak = true;
+                renderSlideState();
+                return;
+            }
+
+            if (activeSlideIndex === 0) return;
+            activeSlideIndex--;
+            renderSlideState();
+        }
+
+        function shareCurrentStory() {
+            if (!activeArticle) return;
+            const shareUrl = `${window.location.origin}${window.location.pathname}?story=${activeArticle.id}`;
+            if (navigator.share) {
+                navigator.share({ title: activeArticle.title, url: shareUrl }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(shareUrl).then(() => showToast("Link copied to clipboard!"));
+            }
+        }
+
+        function showToast(message) {
+            if (toastAlert) {
+                toastAlert.innerText = message;
+                toastAlert.classList.add("show");
+                setTimeout(() => toastAlert.classList.remove("show"), 3000);
+            }
+        }
+
+    
+
+        function openModal(modalId) { 
+            const modal = document.getElementById(modalId);
+            if (modal) { modal.style.display = "flex"; document.body.style.overflow = "hidden"; }
+        }
+        function closeModal(modalId) { 
+            const modal = document.getElementById(modalId);
+            if (modal) { modal.style.display = "none"; document.body.style.overflow = "auto"; }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            const themeBtn = document.getElementById("theme-btn");
+            if (currentTheme === "dark") {
+                document.documentElement.removeAttribute("data-theme");
+                if (themeBtn) themeBtn.innerText = "Dark Mode";
+                localStorage.setItem("theme", "light");
+            } else {
+                document.documentElement.setAttribute("data-theme", "dark");
+                if (themeBtn) themeBtn.innerText = "Light Mode";
+                localStorage.setItem("theme", "dark");
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            renderHomepageFeed();
+            showHome();
+            
+            if (localStorage.getItem("theme") === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+                const themeBtn = document.getElementById("theme-btn");
+                if (themeBtn) themeBtn.innerText = "Light Mode";
+            }
+
+            fetchGlobalMetrics().then(() => {
+                renderHomepageFeed(); 
+            });
+        });
+
+
+
+const newsletterForm = document.getElementById('newsletter-form');
+const submitBtn = newsletterForm.querySelector('.newsletter-submit-btn');
+const statusMsg = document.getElementById('form-status');
+
+newsletterForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(newsletterForm);
+    // Your unique Web3Forms access key
+    formData.append("access_key", "cee576b5-996b-4e7d-87ae-fa72a92d1a90");
+
+    const originalText = submitBtn.textContent;
+    
+    // UI Loading State
+    submitBtn.textContent = "Sending...";
+    submitBtn.disabled = true;
+    statusMsg.style.display = "none"; 
+
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // Elegant Success State
+            statusMsg.textContent = "Direct notifications locked in! Check your inbox soon.";
+            statusMsg.style.color = "#2ecc71"; // Clean green
+            statusMsg.style.display = "block";
+            newsletterForm.reset();
+        } else {
+            // Server-side Error State
+            statusMsg.textContent = `Error: ${data.message}`;
+            statusMsg.style.color = "#e74c3c"; // Crimson red
+            statusMsg.style.display = "block";
+        }
+
+    } catch (error) {
+        // Network Failure State
+        statusMsg.textContent = "Something went wrong. Please check your connection.";
+        statusMsg.style.color = "#e74c3c";
+        statusMsg.style.display = "block";
+    } finally {
+        // Reset button back to normal
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+});
+
+</script>
+</body>
+</html>
