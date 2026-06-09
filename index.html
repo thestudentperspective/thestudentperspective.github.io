@@ -34,6 +34,8 @@
             --modal-bg: #ffffff;
             --accent-green: #25d366;
             --accent-red: #e02424;
+            --tip-bg: #F5E8D8;
+            --tip-line: #FF6F61;
         }
 
         [data-theme="dark"] {
@@ -46,6 +48,9 @@
             --footer-bg: #080808;
             --footer-text: #7a7a7a;
             --modal-bg: #161616;
+            --tip-bg: #1C1C1C;
+            --tip-color: #F5E8D8;
+            --tip-line: #FF6F61;
         }
 
         body {
@@ -58,6 +63,16 @@
             flex-direction: column;
             min-height: 100vh;
         }
+
+        .tip-box {
+            background-color: var(--tip-bg);
+            color: var(--tip-color);
+            display: flex;
+            align-items: flex-start;       /* Align text with top of line */
+            border-left: 4px solid var(--tip-line); /* Vertical line */
+            padding-left: 12px;             /* Space between line and text */
+            margin: 10px 0;
+            line-height: 1.5;
 
         /* --- Medium-Style Sticky Header --- */
         .sticky-header {
@@ -510,6 +525,7 @@
             .header-meta-row { flex-direction: column; align-items: flex-start; gap: 12px; }
             .action-group { width: 100%; justify-content: flex-start; }
         }
+        .tip-box {border-left-width: 3px; padding-left: 8px; font-size: 15px;}
 
         /* 🔥🔥🔥🔥--- GLOBAL AD BLOCKING (STEALTH MODE FIX) ---🔥🔥🔥🔥 */
         .ad-placeholder,
@@ -723,6 +739,38 @@
             //         { headline: "The 5% Grace", body: "When an administrative blunder causes you to completely tank a test, you have to learn the art of the quick pivot. Take a breath and look at the math. If it’s only worth 5% of your year mark, brush it off as an expensive lesson. Forgive yourself for the mistake, lock down the strategy, and make sure it never happens again.", img: "images/red.png" },
             //         { headline: "The Body vs. The Mind Memory", body: "We often treat our minds and bodies as separate entities, but they keep score of each other's stress. When you are pushing your brain to absorb massive amounts of complex information under pressure, your baseline stress is already high. If you try to force your body to perform like it did months ago without building back up, the system will glitch.", img: "images/stress.jpg" },
             //         { headline: "Optimism Under Fire", body: "Staying optimistic in university isn't about pretending everything is perfect; it’s about knowing you can survive the chaos. When reality hits you from multiple angles, the goal is to ground yourself in the present moment. You are getting older, the stakes are getting higher, but you are also getting significantly stronger.", img: "images/student.png" }
+            //     ]
+            // },
+                        //             {
+            //     id: "realisation-about-the-mind",
+            //     tag: "LIFESTYLE & HEALTH",
+            //     title: "7 Brutal Realisations About a Student's Mind",
+            //     excerpt: "Learning from mistakes is a good skill to have, and getting over mistakes quickly is a must have skill because your future depends on it.",
+            //     slides: [
+            //         { headline: "The Morning Saboteur", body: "You wake up with a clean slate, ready to conquer the day, but your mind has other plans. It drags up a ghost from weeks ago—a question you got wrong, a deadline you postponed, or a string of unproductivity—and suddenly, the day crumbles before it even begins. You are paralyzed by the weight of your past hours before the sun is even down.", img: "images/dorm.jpg" },
+            //         { headline: "The Two-Week Blitz", body: "Second year doesn't give you a grace period. In first year, you have time to ease into the syllabus; in second year, you are writing high-stakes tests within the first fourteen days. If you aren't mentally locked in from day one, the sheer pace of the curriculum will leave you playing catch-up before you've even bought your textbooks.", img: "images/intense.jpg" },
+            //         { headline: "The End of 'Winging It' Marks", body: "In the past, you might have been able to pull a decent mark out of a hat even with mediocre preparation. Second year is a ruthless mirror—it gives you back exactly what you put in. The buffer zone is gone, and relying on raw talent without intense execution will result in a quick reality check.", img: "images/blur.jpg" },
+            //         { headline: "The Administrative Nightmare", body: "The dumbest academic mistakes are often the most painful. Overlooking a module on your schedule and studying for the wrong test is a gut-wrenching feeling that will fill you with instant rage. You cannot afford to be disorganized; verify your exam codes and dates like your degree depends on it—because it does.", img: "images/shock.jpg" },
+            //         { headline: "The 5% Grace", body: "When an administrative blunder causes you to completely tank a test, you have to learn the art of the quick pivot. Take a breath and look at the math. If it’s only worth 5% of your year mark, brush it off as an expensive lesson. Forgive yourself for the mistake, lock down the strategy, and make sure it never happens again.", img: "images/red.png" },
+            //         { headline: "The Body vs. The Mind Memory", body: "We often treat our minds and bodies as separate entities, but they keep score of each other's stress. When you are pushing your brain to absorb massive amounts of complex information under pressure, your baseline stress is already high. If you try to force your body to perform like it did months ago without building back up, the system will glitch.", img: "images/stress.jpg" },
+            //         { headline: "Optimism Under Fire", body: "Staying optimistic in university isn't about pretending everything is perfect; it’s about knowing you can survive the chaos. When reality hits you from multiple angles, the goal is to ground yourself in the present moment. You are getting older, the stakes are getting higher, but you are also getting significantly stronger.", img: "images/student.png" }
+            //     ]
+            // },
+
+
+            //                                            {
+            //     id: "realisation-about-the-mind",
+            //     tag: "LIFESTYLE & HEALTH",
+            //     title: "7 Brutal Realisations About a Student's Mind",
+            //     excerpt: "Learning from mistakes is a good skill to have, and getting over mistakes quickly is a must have skill because your future depends on it.",
+            //     slides: [
+            //         { headline: "The Morning Saboteur", body: "You wake up with a clean slate, ready to conquer the day, but your mind has other plans. It drags up a ghost from weeks ago—a question you got wrong, a deadline you postponed, or a string of unproductivity—and suddenly, the day crumbles before it even begins. You are paralyzed by the weight of your past hours before the sun is even down.<div class='tip-box'>Stop letting yesterday’s mistakes audition for a role in today’s performance.</div>", img: "images/dorm.jpg" },
+            //         { headline: "The Multi-Tasking Trap", body: "When you finally force yourself to pick up a book, the mental static kicks in. Your brain starts looping the dangerous lie that you are moving too slow, whispering that you should be covering three subjects simultaneously instead of mastering the one in front of you. This internal panic creates a friction that burns all your energy before you even read a page.<div class='tip-box'>Focus entirely on one subject at a time, because half-learning three things equals knowing nothing.</div>", img: "images/intense.jpg" },
+            //         { headline: "The Illusion of 'Later'", body: "When the overwhelm wins, you retreat into the comfort of a tomorrow that never comes. You tell yourself you’ll start when the energy hits or when the clock strikes a specific hour, but waiting for the perfect mood is just procrastination in a fancy coat. The longer you wait for inspiration, the deeper you sink into the couch.<div class='tip-box'>Action creates the energy, so don't wait for the mood to strike before you make a move.</div>", img: "images/blur.jpg" },
+            //         { headline: "The Reset Button", body: "When the mental beating becomes too brutal to push through, the smartest tactical move is to wave the white flag and declare an official off-day. For an introvert, salvation isn't found in a crowded room; it’s found in taking the long route to the store, sitting in a quiet park, and grabbing an ice cream to completely flush the toxic energy out of your system.<div class='tip-box'>When your mind is drowning in noise, step outside and let a change of scenery clear your head.</div>", img: "images/shock.jpg" },
+            //         { headline: "The 30-Minute Overflow", body: "Stepping away entirely has a strange way of unlocking an unexpected surge of late-night motivation. When you stop forcing the issue, the pressure drops, and suddenly you actually want to look at your notes. You quickly realize that 30 minutes of high-intensity, willing focus beats 5 hours of staring blankly at a page trying to force a breakthrough.<div class='tip-box'>Prioritize the quality of your focus over the quantity of hours spent agonizing at your desk.</div>", img: "images/red.png" },
+            //         { headline: "The Reality Check", body: "When the deadline is urgent and running away isn't an option, you have to interrogate your own brain. Strip away the panic, look at the cold facts, and ask yourself if your stress is rooted in reality or if you just manufactured a crisis in your mind two seconds ago. Beating yourself up has a 0% success rate for solving engineering problems.<div class='tip-box'>Separate your current emotional panic from the actual facts of the workload.</div>", img: "images/stress.jpg" },
+            //         { headline: "Fake It Til' You Focus", body: "When your brain resists the work, you have to trick it into motion by lowering the barrier to entry. Start by answering a simple question you already know, summarizing a familiar concept, or promising yourself you will only do one single problem before quitting. More often than not, that one easy problem breaks the paralysis, and you end up solving five without even realizing it.<div class='tip-box'>Build your momentum on small, guaranteed victories to silence the doubt.</div>", img: "images/student.png" }
             //     ]
             // }
         ];
