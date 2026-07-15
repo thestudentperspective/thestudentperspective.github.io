@@ -551,20 +551,35 @@
         }
 
     .reel_video{
-    display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background-color: #1877F2;
-  color: #ffffff;
-  text-decoration: none;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 10px 18px;
-  border-radius: 25px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, background-color 0.2s ease;
-        }
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #1877F2;
+        color: #ffffff;
+        text-decoration: none;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 18px;
+        border-radius: 25px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .facebook_prof{
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #1877F2;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 18px;
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+    }
     </style>
 </head>
 <body>
@@ -708,21 +723,7 @@
             </div>
             <div class="footer-top-row">
                 <div class="footer-brand">The Student Perspective.</div>
-    <a href="https://www.facebook.com/profile.php?id=61591206983388" target="_blank" rel="noopener noreferrer" style="
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background-color: #1877F2;
-            color: #ffffff;
-            text-decoration: none;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: bold;
-            padding: 10px 18px;
-            border-radius: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease, background-color 0.2s ease;
-            " onmouseover="this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';" onmouseout="this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';">
+    <a class="facebook_prof" href="https://www.facebook.com/profile.php?id=61591206983388" target="_blank" rel="noopener noreferrer" onmouseover="this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';" onmouseout="this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';">
   
         <!-- Facebook SVG Icon -->
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1126,11 +1127,11 @@
                 if (progressTracker && mediaViewport && textViewport && megaActionBtn) {
                     progressTracker.innerText = `Advertisement`;
                 mediaViewport.className = "ad-break-stage";
-                mediaViewport.innerHTML = `Mid-Story Inline Banner Advertisement`;
+                mediaViewport.innerHTML = `<a href="https://www.facebook.com/profile.php?id=61591206983388" target="_blank" rel="noopener noreferrer"><img src="logo.png" alt="Follow On Facebook" width="400" height="400"></a>`;
                 
                 textViewport.innerHTML = `
-                    <h3 class="slide-headline" style="text-align:center;">Support Our Platform</h3>
-                    <p class="slide-body-text" style="text-align:center; color:var(--text-muted);">This non-intrusive placement keeps our long-form storytelling independent and free.</p>
+                    <h3 class="slide-headline" style="text-align:center;">Don't Want To Miss A Lesson?</h3>
+                    <p class="slide-body-text" style="text-align:center; color:var(--text-muted);">Follow Me On Facebook and Get Notified</p>
                 `;
                 megaActionBtn.innerHTML = "Skip Ad &rarr;";
                 }
@@ -1345,6 +1346,21 @@ function handleFacebookFollow(event) {
         window.open(pageUrl, '_blank', 'noopener,noreferrer');
     }
 }
+
+// Run this immediately when the page loads
+window.addEventListener('DOMContentLoaded', () => {
+    // 1. Checking the URL for "?story=..."
+    const urlParams = new URLSearchParams(window.location.search);
+    const storyIdFromUrl = urlParams.get('story');
+
+    if (storyIdFromUrl) {
+        // 2. If a story ID exists in the URL, load it!
+        loadArticle(storyIdFromUrl); 
+    } else {
+        // 3. Otherwise, load default homepage view
+        showHome(); // Homepage loading function
+    }
+});
 
 </script>
 </body>
