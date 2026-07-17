@@ -222,6 +222,7 @@
             width: 100%;
             animation: fadeIn 0.4s ease;
             display: block;
+            position: relative; /* Acts as the anchor anchor for the button position */
         }
         .feed-title {
             font-family: var(--font-serif);
@@ -231,6 +232,7 @@
             letter-spacing: -0.5px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 16px;
+            padding-right: 120px; /* Prevents text from clashing into the button on small screens */
         }
 
         /* Float the button directly over the far right of the heading border */
