@@ -217,8 +217,6 @@
             border: 1px dashed var(--border-color);
         }
 
-
-
         /* --- Homepage / Feed View --- */
         #homepage-view {
             width: 100%;
@@ -233,6 +231,111 @@
             letter-spacing: -0.5px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 16px;
+        }
+
+        /* Float the button directly over the far right of the heading border */
+        #filter-trigger-btn {
+            position: absolute;
+            top: 12px; /* Pulls it vertically into alignment with your text */
+            right: 0;  /* Pins it flush against the right margin border */
+            background: none;
+            border: 1px solid var(--text-color, #333);
+            color: var(--text-color, #333);
+            padding: 0.4rem 1.15rem;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        #filter-trigger-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Full-screen backdrop with frosted glass effect */
+        .filter-overlay-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; /* Ensure it stays above everything */
+            animation: fadeIn 0.25s ease;
+        }
+
+        /* Centered modal box */
+        .filter-modal-card {
+            background: var(--filter-bg);
+            color: var(--filter-color);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+
+        .filter-modal-card h3 { margin-top: 0; font-size: 1.5rem; }
+        .filter-modal-card p { font-size: 0.9rem; opacity: 0.7; margin-bottom: 1.5rem; }
+
+        /* Grid holding your tag checkboxes styled like pills */
+        .tags-checkbox-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Hide raw checkbox, style label as a clickable pill */
+        .tag-pill-checkbox {
+            display: none;
+        }
+        .tag-pill-label {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .tag-pill-checkbox:checked + .tag-pill-label {
+            background: #ff4500; /* Active brand color */
+            border-color: #ff4500;
+            color: white;
+        }
+
+        /* Modal Actions Footer */
+        .filter-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        .filter-modal-actions button {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-cancel { background: #eee; color: #333; }
+        .btn-confirm { background: #ff4500; color: white; }
+
+        @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
         }
         .article-card {
             padding: 24px 0;
@@ -672,6 +775,31 @@
 
             <section id="homepage-view">
                 <h1 class="feed-title">Stories & Lessons<p style="font-size: 13px;text-transform: uppercase;letter-spacing: 1px;font-weight: 600;color: var(--text-muted);">From The Mind Of A Student</p></h1>
+
+    <!-- The clean, single Filter trigger button -->
+    <div class="filter-controls-container" style="text-align: center; margin: 1.5rem 0;">
+    <button id="filter-trigger-btn" onclick="openFilterOverlay()" style="background: none; border: 1px solid var(--text-color, #333); color: var(--text-color, #333); padding: 0.5rem 1.5rem; border-radius: 20px; font-weight: 500; cursor: pointer; transition: all 0.2s;">
+        Filter Stories <span>▼</span>
+    </button>
+    </div>
+
+    <!-- The Frosted Glass Filter Overlay -->
+    <div id="filter-overlay" class="filter-overlay-backdrop" style="display: none;">
+    <div class="filter-modal-card">
+        <h3>Filter by Tags</h3>
+        <p>Select one or multiple tags to narrow down the perspectives:</p>
+        
+        <!-- The Grid of Tag Options (Will be populated dynamically by JS) -->
+        <div id="filter-tags-grid" class="tags-checkbox-grid"></div>
+        
+        <!-- Action Buttons -->
+        <div class="filter-modal-actions">
+            <button onclick="closeFilterOverlay()" class="btn-cancel">Cancel</button>
+            <button onclick="applyTagFilters()" class="btn-confirm">Confirm Selection</button>
+        </div>
+        </div>
+    </div>
+
                 <div id="feed-container"></div>
             </section>
 
@@ -735,6 +863,72 @@
                 <div class="action-bar">
                     <button class="mega-next-btn" id="mega-action-btn" onclick="nextSlide()">Next Lesson &rarr;</button>
                 </div>
+<!-- Comment & Discussion Section Wrapper -->
+<section id="discussion-section" style="margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 2rem;">
+    
+    <!-- Dynamic Slide Prompt Box -->
+    <div id="dynamic-discussion-prompt" style="background-color: rgba(128,128,128, 0.08); padding: 1.25rem; border-radius: 8px; border-left: 4px solid var(--text-color, #333); margin-bottom: 2rem;">
+        <h4 style="margin: 0 0 0.5rem 0; font-family: var(--font-serif); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;">Thoughts from the Author</h4>
+        <p id="prompt-text" style="margin: 0; font-size: 15px; line-height: 1.5; font-style: italic; color: var(--text-muted);"></p>
+    </div>
+
+    <!-- Tier 1: The Clean Inline Feed (Shows ONLY the single latest comment) -->
+    <div id="inline-comments-preview" style="margin-bottom: 1.5rem;">
+        <h4 style="font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem;">Latest Perspective</h4>
+        <div id="latest-comment-target"></div>
+    </div>
+
+    <!-- Trigger to see everything -->
+    <button id="show-all-comments-btn" onclick="openCommentsOverlay()" style="background: none; border: 1px solid var(--border-color); color: var(--text-color); padding: 0.5rem 1.25rem; border-radius: 20px; font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 2.5rem; transition: all 0.2s;">
+        Show all comments (<span id="comments-count-badge">0</span>)
+    </button>
+
+    <!-- Tier 2: The Input Boxes (Always visible directly below the show-all button) -->
+    <div id="comment-form-container" style="margin-bottom: 2.5rem;">
+        <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 1rem;">Join the Conversation</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <input type="text" id="comment-author" placeholder="Name (Leave blank for Anonymous)" style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 0.6rem 1rem; border-radius: 6px; font-size: 14px; max-width: 280px;">
+            <textarea id="comment-body" placeholder="Share your perspective on this essay..." rows="3" style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 6px; font-size: 15px; line-height: 1.5; font-family: inherit; resize: vertical;"></textarea>
+            <div style="display: flex; justify-content: flex-end;">
+                <button id="submit-comment-btn" onclick="handleCommentSubmission()" style="background-color: var(--text-color, #333); color: var(--bg-color); border: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    Post Comment
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tier 3: The Frosted Glass Complete Conversation Overlay -->
+<div id="comments-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); justify-content: center; align-items: center; z-index: 10000; animation: fadeIn 0.25s ease;">
+    <div style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 2rem; border-radius: 16px; max-width: 550px; width: 90%; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
+        
+        <!-- Modal Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+            <h3 style="margin: 0; font-family: var(--font-serif); font-size: 22px;">All Responses</h3>
+            <button onclick="closeCommentsOverlay()" style="background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 0 5px;">&times;</button>
+        </div>
+        
+        <!-- Scrollable Full Conversation Stream -->
+        <div id="modal-comments-stream" style="flex: 1; overflow-y: auto; padding-right: 0.5rem; margin-bottom: 1.5rem;"></div>
+        
+        <!-- Duplicate Input Form Box Inside Modal -->
+        <div style="border-top: 1px solid var(--border-color); padding-top: 1rem;">
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <input type="text" id="modal-comment-author" placeholder="Name (Leave blank for Anonymous)" style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 13px; max-width: 220px;">
+                <textarea id="modal-comment-body" placeholder="Reply with your perspective..." rows="2" style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 0.6rem 0.75rem; border-radius: 6px; font-size: 14px; line-height: 1.4; font-family: inherit; resize: none;"></textarea>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button onclick="handleModalCommentSubmission()" style="background-color: var(--text-color, #333); color: var(--bg-color); border: none; padding: 0.5rem 1.25rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px;">
+                        Submit Reply
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            </section>
+
             </section>
         </div>
         </main>
@@ -854,8 +1048,8 @@
 
                                                        {
                 id: "unlocking-your-mind",
-                tag: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>LIFESTYLE & HEALTH",
-                title: "Smart Ways To Unlock Your Mind",
+                tag: "LIFESTYLE & HEALTH",
+                title: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>Smart Ways To Unlock Your Mind",
                 excerpt: "Life is unpredictable and wont always be fun and games, and how you navigate your daily life can be a huge win for your future self.",
                 slides: [
                     { headline: "The New Stranger", body: "Anxiety hits like a software update you never asked for, introducing you to a terrifying version of your own mind. When you don't have a label for the panic, you feel entirely defenceless against it, trapped in a chaotic loop you can't identify. Finding out what it actually is can be incredibly scary, but naming the beast is the very first step toward taming it.<div class='tip-box'>You cannot control a problem until you first learn to give it a name.</div>", img: "images/anxious.jpg" },
@@ -870,8 +1064,8 @@
 
                                                         {
                 id: "daily-engine",
-                tag: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>LIFESTYLE & HEALTH",
-                title: "Illusion of working 24/7",
+                tag: "LIFESTYLE & HEALTH",
+                title: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>Illusion of working 24/7",
                 excerpt: "Forcing yourself to do what does not work for you is a recipe for disaster.",
                 slides: [
                     { headline: "The Myth about an Engineering Student", body: "The world looks at an engineering student and expects a robot capable of processing data and staring at textbooks 24/7. But the brutal reality of higher education is that you aren't just processing complex formulas; you are processing a wave of heavy, unfamiliar adult emotions for the first time in your life. High school was simple because the path was paved and your headspace was clear, but university forces you to build the road while fighting your own mind.<div class='tip-box'>Give yourself permission to be human, because you cannot engineer a life if you burn out the engine.</div>", img: "images/joy.jpg" },
@@ -887,8 +1081,8 @@
 
             //,                                             {
             //     id: "realisation-about-the-mind",
-            //     tag: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>LIFESTYLE & HEALTH",
-            //     title: "Realisations About a Student's Mind",
+            //     tag: "LIFESTYLE & HEALTH",
+            //     title: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>Realisations About a Student's Mind",
             //     excerpt: "Learning from mistakes is a good skill to have, and getting over mistakes quickly is a must have skill because your future depends on it.",
             //     slides: [
             //         { headline: "The Morning Saboteur", body: "You wake up with a clean slate, ready to conquer the day, but your mind has other plans. It drags up a ghost from weeks ago—a question you got wrong, a deadline you postponed, or a string of unproductivity—and suddenly, the day crumbles before it even begins. You are paralyzed by the weight of your past hours before the sun is even down.<div class='tip-box'>Stop letting yesterday’s mistakes audition for a role in today’s performance.</div>", img: "images/dorm.jpg" },
@@ -903,8 +1097,8 @@
 
             //,                         {
             //     id: "price-of-habit",
-            //     tag: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>FINANCE & WEALTH",
-            //     title: "The Price of the Habit",
+            //     tag: "FINANCE & WEALTH",
+            //     title: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>The Price of the Habit",
             //     excerpt: "We decide to save once the real salary hits our accounts, and that is a huge mistake.",
             //     slides: [
             //         { headline: "The Cents in the Account", body: "University gives you a brutal, front-row ticket to the reality of living paycheck to paycheck, where seeing single-digit cents in your bank account becomes a normal Tuesday. Financial Gurus always speak of the golden rule of "paying yourself first," but they clearly haven't tried doing that on a textbook-and-groceries budget. When the money hits your account and immediately vanishes into thin air just to cover the bare essentials, saving feels less like a strategy and more like a luxury you can't afford.<div class='tip-box'>Don't beat yourself up for struggling to apply corporate wealth advice to a survival-mode budget.</div>", img: "images/dorm.jpg" },
@@ -919,8 +1113,8 @@
 
             //,                         {
             //     id: "habit-of-investing",
-            //     tag: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>FINANCE & WEALTH",
-            //     title: "The Leverage of Decades",
+            //     tag: "FINANCE & WEALTH",
+            //     title: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>The Leverage of Decades",
             //     excerpt: "Telling yourself that you will start investing once you earn real money is a trap. Start building the habit now!",
             //     slides: [
             //         { headline: "The Capital of Time", body: "As a student trapped on a paper-thin budget, it is easy to assume that you lack the financial qualifications to enter the world of investing. But the hard truth is that your absolute most valuable asset isn't the amount of money in your wallet; it is the massive runway of time you have ahead of you. While Wall Street multi-millionaires can buy larger blocks of stock, they cannot buy back their twenties—a window where compounding returns do the heaviest lifting.<div class='tip-box'>Stop waiting for a massive windfall to start, because your youth is a financial leverage that money simply cannot buy.</div>", img: "images/dorm.jpg" },
@@ -1015,35 +1209,50 @@
             }
         }
 
-        function renderHomepageFeed() {
-            if (!feedContainer) return;
-            feedContainer.innerHTML = "";
-            
-            articlesDatabase.forEach((art, index) => {
-                const isRead = localStorage.getItem(`read_${art.id}`) === "true";
-                const stats = cloudMetrics[art.id] || { views: 0, likes: 0 };
-                
-                const card = document.createElement("div");
-                card.className = "article-card";
-                card.onclick = () => loadArticle(art.id);
-                
-                card.innerHTML = `
-                    <div class="card-top-row">
-                        <div class="article-tag">${art.tag}</div>
-                        <div class="status-badge ${isRead ? 'read' : 'unread'}">${isRead ? 'Read' : 'Not Read'}</div>
-                    </div>
-                    <div class="article-title">${art.title}</div>
-                    <div class="article-excerpt">${art.excerpt}</div>
-                    <div class="article-meta">
-                        <span>8 min read</span> &middot; 
-                        <span class="feed-metric-inline">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> ${formatMetric(stats.views)} views
-                        </span> &middot;
-                        <span class="feed-metric-inline">
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> ${formatMetric(stats.likes)} likes
-                        </span>
-                    </div>
-                `;
+    function renderHomepageFeed() {
+    if (!feedContainer) return;
+    feedContainer.innerHTML = "";
+    
+    // --- NEW FILTER LAYER SYSTEM ---
+    let articlesToDisplay = articlesDatabase;
+    
+    if (selectedTags.length > 0) {
+        // Only keep articles whose tag matches one of the user's checked tags
+        articlesToDisplay = articlesDatabase.filter(art => selectedTags.includes(art.tag));
+    }
+    
+    if (articlesToDisplay.length === 0) {
+        feedContainer.innerHTML = `<p style="text-align:center; opacity:0.5; padding: 3rem 0; width:100%; font-family:var(--font-serif);">No articles match the selected filters.</p>`;
+        return;
+    }
+    // -------------------------------
+
+    //Loops through 'articlesToDisplay'
+    articlesToDisplay.forEach((art, index) => {
+        const isRead = localStorage.getItem(`read_${art.id}`) === "true";
+        const stats = cloudMetrics[art.id] || { views: 0, likes: 0 };
+        
+        const card = document.createElement("div");
+        card.className = "article-card";
+        card.onclick = () => loadArticle(art.id);
+        
+        card.innerHTML = `
+            <div class="card-top-row">
+                <div class="article-tag">${art.tag}</div>
+                <div class="status-badge ${isRead ? 'read' : 'unread'}">${isRead ? 'Read' : 'Not Read'}</div>
+            </div>
+            <div class="article-title">${art.title}</div>
+            <div class="article-excerpt">${art.excerpt}</div>
+            <div class="article-meta">
+                <span>8 min read</span> &middot; 
+                <span class="feed-metric-inline">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> ${formatMetric(stats.views)} views
+                </span> &middot;
+                <span class="feed-metric-inline">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> ${formatMetric(stats.likes)} likes
+                </span>
+            </div>
+        `;
                 feedContainer.appendChild(card);
 
                 // Inline Organic Story Spacer Ad Injection 🔥🔥🔥
@@ -1112,6 +1321,8 @@
             updateInteractiveMetricsUI();
             renderSlideState();
             window.scrollTo(0,0); 
+
+            renderDiscussionModule(activeArticle.id);
         }
 
         function updateInteractiveMetricsUI() {
@@ -1405,6 +1616,209 @@ function handleFacebookFollow(event) {
     }
 }
 
+
+
+// Global array to store currently selected tag filters
+let selectedTags = [];
+
+// 1. Open Overlay and dynamically render unique tags from database
+function openFilterOverlay() {
+    const overlay = document.getElementById('filter-overlay');
+    const tagsGrid = document.getElementById('filter-tags-grid');
+    
+    if (!overlay || !tagsGrid) return;
+
+    // Extract unique values from your articlesDatabase 'tag' property
+    const uniqueTags = new Set();
+    articlesDatabase.forEach(art => {
+        if (art.tag) uniqueTags.add(art.tag);
+    });
+
+    // Generate the interactive pill-checkbox elements
+    tagsGrid.innerHTML = '';
+    uniqueTags.forEach(tag => {
+        const isChecked = selectedTags.includes(tag) ? 'checked' : '';
+        tagsGrid.innerHTML += `
+            <div>
+                <input type="checkbox" id="tag-${tag}" value="${tag}" class="tag-pill-checkbox" ${isChecked}>
+                <label for="tag-${tag}" class="tag-pill-label">${tag}</label>
+            </div>
+        `;
+    });
+
+    overlay.style.display = 'flex';
+}
+
+// 2. Hide overlay box on Cancel
+function closeFilterOverlay() {
+    document.getElementById('filter-overlay').style.display = 'none';
+}
+
+// 3. Save checkbox states and re-run homepage feed function
+function applyTagFilters() {
+    const checkboxes = document.querySelectorAll('.tag-pill-checkbox');
+    selectedTags = [];
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            selectedTags.push(cb.value);
+        }
+    });
+
+    closeFilterOverlay();
+    
+    // Fires homepage rendering function to redraw the cards
+    renderHomepageFeed(); 
+}
+
+
+
+// Open/Close switches for the complete layout list modal
+function openCommentsOverlay() {
+    document.getElementById('comments-modal-overlay').style.display = 'flex';
+}
+function closeCommentsOverlay() {
+    document.getElementById('comments-modal-overlay').style.display = 'none';
+}
+
+
+/**
+ * Main Dynamic Loader: Run this inside your loadArticle(articleId) workflow!
+ */
+async function renderDiscussionModule(articleId) {
+    // 1. Isolate just the string handle immediately ("jumping-new-city")
+    const cleanId = typeof articleId === 'object' && articleId !== null ? articleId.id : articleId;
+    
+    // Set your global tracking state cleanly
+    activeArticle = cleanId;
+    
+    // 2. Fix the lookup: Find using the clean text string handle
+    const currentArticle = articlesDatabase.find(art => art.id === cleanId);
+    const promptTextEl = document.getElementById('prompt-text');
+    if (currentArticle && currentArticle.discussionPrompt) {
+        promptTextEl.innerText = currentArticle.discussionPrompt;
+        document.getElementById('dynamic-discussion-prompt').style.display = 'block';
+    } else {
+        promptTextEl.innerText = "What are your core takeaways, experiences, or stories surrounding the lessons in this piece?";
+    }
+
+    // Reset layout input fields
+    document.getElementById('comment-author').value = "";
+    document.getElementById('comment-body').value = "";
+
+    // 3. Your Supabase query now safely uses cleanId 
+    const { data: comments, error } = await supabaseClient
+        .from('comments')
+        .select('*')
+        .eq('article_id', cleanId)
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error("Error drawing Supabase comments:", error);
+        return;
+    }
+
+    // 3. Update the global numeric badge on your show-all toggle button
+    document.getElementById('comments-count-badge').innerText = comments.length;
+
+    // Targets
+    const latestTarget = document.getElementById('latest-comment-target');
+    const streamTarget = document.getElementById('modal-comments-stream');
+
+    // 4. Render Tier 1: The single latest comment preview card
+    if (comments.length === 0) {
+        latestTarget.innerHTML = `<p style="color: var(--text-muted); font-style: italic; font-size: 14px; margin: 0 0 1rem 0;">No thoughts shared yet. Be the first to start the conversation!</p>`;
+        streamTarget.innerHTML = `<p style="color: var(--text-muted); font-style: italic; font-size: 14px; text-align: center; padding: 2rem 0;">No perspectives posted yet.</p>`;
+        return;
+    }
+
+    // Isolate index 0 (the absolute latest comment)
+    const latest = comments[0];
+    latestTarget.innerHTML = `
+        <div style="background-color: rgba(128,128,128, 0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; animation: fadeIn 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <strong style="font-size: 14px;">${escapeHtml(latest.author)}</strong>
+                <span style="font-size: 11px; color: var(--text-muted);">${new Date(latest.created_at).toLocaleDateString()}</span>
+            </div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; opacity: 0.9;">${escapeHtml(latest.body)}</p>
+        </div>
+    `;
+
+    // 5. Render Tier 3: Show ALL responses sequentially inside the modal container scroll view
+    streamTarget.innerHTML = comments.map(c => `
+        <div style="border-bottom: 1px solid var(--border-color); padding: 1rem 0; &:last-child { border: none; }">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
+                <strong style="font-size: 14px;">${escapeHtml(c.author)}</strong>
+                <span style="font-size: 11px; color: var(--text-muted);">${new Date(c.created_at).toLocaleDateString()}</span>
+            </div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--text-color); opacity: 0.95; white-space: pre-wrap;">${escapeHtml(c.body)}</p>
+        </div>
+    `).join('');
+}
+
+/**
+ * Handle submission from the baseline page boxes
+ */
+async function handleCommentSubmission() {
+    const cleanId = typeof activeArticle === 'object' && activeArticle !== null ? activeArticle.id : activeArticle;
+    const authorVal = document.getElementById('comment-author').value.trim();
+    const body = document.getElementById('comment-body').value.trim();
+
+    // If blank name, stamp it fallback Anonymous
+    const author = authorVal || "Anonymous";
+
+    if (!body) {
+        alert("Please write a text comment before submitting.");
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from('comments')
+        .insert([{ article_id: cleanId, author, body }]);
+
+    if (error) {
+        console.error("Supabase injection fail:", error);
+        alert("Failed to submit response.");
+    } else {
+        // Reload data to instantly update the screen display lines
+        renderDiscussionModule(cleanId);
+    }
+}
+
+/**
+ * Handle submission from inside the hidden modal panel text boxes
+ */
+async function handleModalCommentSubmission() {
+    const cleanId = typeof activeArticle === 'object' && activeArticle !== null ? activeArticle.id : activeArticle;
+    const authorVal = document.getElementById('modal-comment-author').value.trim();
+    const body = document.getElementById('modal-comment-body').value.trim();
+
+    const author = authorVal || "Anonymous";
+
+    if (!body) return alert("Please type your message.");
+
+    const { error } = await supabaseClient
+        .from('comments')
+        .insert([{ article_id: cleanId, author, body }]);
+
+    if (error) {
+        console.error("Supabase modal submission error:", error);
+    } else {
+        document.getElementById('modal-comment-body').value = "";
+        document.getElementById('modal-comment-author').value = "";
+        // Refresh behind modal
+        renderDiscussionModule(cleanId);
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.innerText = text;
+    return div.innerHTML;
+}
+
+
+
 // Run this immediately when the page loads
 window.addEventListener('DOMContentLoaded', () => {
     // 1. Checking the URL for "?story=..."
@@ -1420,6 +1834,23 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Universal Page Bootstrapper
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Give your main layout engine half a second to finish loading the initial article text
+    setTimeout(() => {
+        // 2. Check if a global article object or active state is defined on your page
+        // (Adjust 'activeArticle' if your main script uses a different variable name like 'currentArticle')
+        if (typeof activeArticle !== 'undefined' && activeArticle !== null) {
+            console.log("Bootstrapper waking up comment feed for:", activeArticle);
+            renderDiscussionModule(activeArticle);
+        } else {
+            // Fallback: If the global variable isn't ready, try using the first item in your database array
+            if (typeof articlesDatabase !== 'undefined' && articlesDatabase.length > 0) {
+                renderDiscussionModule(articlesDatabase[0]);
+            }
+        }
+    }, 400); // 400ms delay ensures your HTML nodes are fully built and ready to receive text
+});
 </script>
 </body>
 </html>
