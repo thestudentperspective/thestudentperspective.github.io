@@ -1688,14 +1688,11 @@ function closeCommentsOverlay() {
  * Main Dynamic Loader: Run this inside your loadArticle(articleId) workflow!
  */
 async function renderDiscussionModule(articleId) {
-    // 1. Isolate just the string handle immediately ("jumping-new-city")
-    const cleanId = typeof articleId === 'object' && articleId !== null ? articleId.id : articleId;
-    
-    // Set your global tracking state cleanly
-    activeArticle = cleanId;
+
+    activeArticleId = typeof articleId === 'object' && articleId !== null ? articleId.id : articleId;
     
     // 2. Fix the lookup: Find using the clean text string handle
-    const currentArticle = articlesDatabase.find(art => art.id === cleanId);
+    const currentArticle = articlesDatabase.find(art => art.id === activeArticleId);
     const promptTextEl = document.getElementById('prompt-text');
     if (currentArticle && currentArticle.discussionPrompt) {
         promptTextEl.innerText = currentArticle.discussionPrompt;
@@ -1708,11 +1705,11 @@ async function renderDiscussionModule(articleId) {
     document.getElementById('comment-author').value = "";
     document.getElementById('comment-body').value = "";
 
-    // 3. Your Supabase query now safely uses cleanId 
+    // 3. Your Supabase query now safely uses activeArticleId 
     const { data: comments, error } = await supabaseClient
         .from('comments')
         .select('*')
-        .eq('article_id', cleanId)
+        .eq('article_id', activeArticleId)
         .order('created_at', { ascending: false });
 
     if (error) {
@@ -1762,7 +1759,7 @@ async function renderDiscussionModule(articleId) {
  * Handle submission from the baseline page boxes
  */
 async function handleCommentSubmission() {
-    const cleanId = typeof activeArticle === 'object' && activeArticle !== null ? activeArticle.id : activeArticle;
+
     const authorVal = document.getElementById('comment-author').value.trim();
     const body = document.getElementById('comment-body').value.trim();
 
@@ -1776,14 +1773,14 @@ async function handleCommentSubmission() {
 
     const { error } = await supabaseClient
         .from('comments')
-        .insert([{ article_id: cleanId, author, body }]);
+        .insert([{ article_id: activeArticleId, author, body }]);
 
     if (error) {
         console.error("Supabase injection fail:", error);
         alert("Failed to submit response.");
     } else {
         // Reload data to instantly update the screen display lines
-        renderDiscussionModule(cleanId);
+        renderDiscussionModule(activeArticleId);
     }
 }
 
@@ -1791,7 +1788,7 @@ async function handleCommentSubmission() {
  * Handle submission from inside the hidden modal panel text boxes
  */
 async function handleModalCommentSubmission() {
-    const cleanId = typeof activeArticle === 'object' && activeArticle !== null ? activeArticle.id : activeArticle;
+
     const authorVal = document.getElementById('modal-comment-author').value.trim();
     const body = document.getElementById('modal-comment-body').value.trim();
 
@@ -1801,7 +1798,7 @@ async function handleModalCommentSubmission() {
 
     const { error } = await supabaseClient
         .from('comments')
-        .insert([{ article_id: cleanId, author, body }]);
+        .insert([{ article_id: activeArticleId, author, body }]);
 
     if (error) {
         console.error("Supabase modal submission error:", error);
@@ -1809,7 +1806,7 @@ async function handleModalCommentSubmission() {
         document.getElementById('modal-comment-body').value = "";
         document.getElementById('modal-comment-author').value = "";
         // Refresh behind modal
-        renderDiscussionModule(cleanId);
+        renderDiscussionModule(activeArticleId);
     }
 }
 
