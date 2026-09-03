@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght=0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
 
 
     <style>
@@ -30,6 +31,8 @@
             --footer-bg: #080808;
             --footer-text: #7a7a7a;
             --modal-bg: #161616;
+            --filter-bg: rgba(20, 20, 20, 0.95);
+            --filter-color: #fff;
         }
 
         [data-theme="dark"] {
@@ -46,9 +49,8 @@
             --modal-bg: #ffffff;
             --accent-green: #25d366;
             --accent-red: #e02424;
-            --tip-bg: #F5E8D8;
-            --tip-line: #FF6F61;
-
+            --filter-bg: rgba(255, 255, 255, 0.95);
+            --filter-color: #111;
         }
 
         body {
@@ -164,7 +166,6 @@
             padding-bottom: 16px;
             padding-right: 120px; /* Prevents text from clashing into the button on small screens */
         }
-
         /* Float the button directly over the far right of the heading border */
         #filter-trigger-btn {
             position: absolute;
@@ -269,6 +270,7 @@
         @keyframes fadeIn {
     from { opacity: 0; } to { opacity: 1; }
         }
+
         .article-card {
             padding: 24px 0;
             border-bottom: 1px solid var(--border-color);
@@ -483,7 +485,100 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-    .facebook_prof{
+        /* --- Modals Framework --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-box {
+            background-color: var(--modal-bg);
+            width: 100%; max-width: 500px; border-radius: 8px; padding: 32px;
+            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            animation: modalPop 0.3s ease;
+        }
+        .modal-close-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: none; border: none; font-size: 24px;
+            color: var(--text-muted); cursor: pointer; line-height: 1;
+        }
+        .modal-close-btn:hover { color: var(--text-main); }
+        .modal-title { font-family: var(--font-serif); font-size: 24px; margin-bottom: 16px; }
+        .modal-body { font-size: 15px; line-height: 1.6; color: var(--text-muted); max-height: 400px; overflow-y: auto; }
+
+        /* --- Footer --- */
+        .premium-footer {
+            background-color: var(--footer-bg); color: var(--footer-text);
+            width: 100%; padding: 60px 24px 40px 24px; margin-top: auto; 
+            border-top: 1px solid var(--border-color); position: relative; z-index: 1100; 
+        }
+        .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+        .footer-newsletter-section { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 32px; }
+        .newsletter-info { max-width: 450px; }
+        .newsletter-info h4 { font-family: var(--font-serif); font-size: 20px; color: #ffffff; margin-bottom: 8px; }
+        .newsletter-info p { font-size: 14px; color: var(--footer-text); line-height: 1.5; }
+        .newsletter-form { display: flex; width: 100%; max-width: 400px; gap: 8px; }
+        .newsletter-input { flex: 1; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 16px; border-radius: 4px; color: #ffffff; font-size: 14px; outline: none; }
+        .newsletter-submit-btn { background-color: #ffffff; color: #1a1a1a; border: none; padding: 0 20px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+        .newsletter-submit-btn:hover {
+            background-color: #e5e5e5;
+        }
+        .footer-top-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .footer-brand { font-family: var(--font-serif); font-size: 18px; font-weight: 600; color: #ffffff; }
+        .footer-bottom-row { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; display: flex; justify-content: space-between; font-size: 12px; }
+
+        .toast-notification {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background-color: var(--text-main); color: var(--bg-color); padding: 12px 24px;
+            border-radius: 4px; font-size: 14px; font-weight: 500; z-index: 3000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+        .toast-notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* --- CSS Animation Utilities --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+ 
+
+        @media (max-width: 768px) {
+            .nav-arrow { font-size: 28px; padding: 10px 4px; }
+            .slide-stage { max-width: calc(100% - 70px); min-height: 200px; }
+            .slide-img { height: 250px; }
+            .main-story-title { font-size: 24px; }
+            .slide-headline { font-size: 20px; }
+            .slide-body-text { font-size: 15px; }
+            .mega-next-btn { width: 100%; }
+            .footer-newsletter-section { flex-direction: column; align-items: stretch; }
+            .newsletter-form { max-width: 100%; }
+            .footer-top-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .footer-bottom-row { flex-direction: column; gap: 10px; }
+            .header-meta-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .action-group { width: 100%; justify-content: flex-start; }
+            body {
+            /* Scales the entire visual layout down to 50% size */
+            zoom: 0.5; 
+        
+            /* Fallback for browsers that don't fully support 'zoom' */
+            -moz-transform: scale(0.5);
+            -moz-transform-origin: top center;
+    }
+            /* OVERRIDE: Prevent the footer from stacking into a column at 50% zoom */
+            .footer-top-row { 
+                flex-direction: row !important; 
+                align-items: center !important; 
+                justify-content: space-between !important;
+                gap: unset !important; /* Clears the vertical gap */
+    }
+        }
+
+        .facebook_prof{
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -497,44 +592,46 @@
             border-radius: 25px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    .slide-stage {
-            position: relative !important;
-            overflow: hidden; /* Keeps the card hidden off-screen until it slides in */
-    }
-
-    /* The recommendation card container */
-    .next-up-overlay-card {
-            position: absolute;
-            top: 50%;
-            right: -340px; /* Start completely hidden off-screen to the right */
-            transform: translateY(-50%); /* Perfectly center it vertically */
-            width: 260px;
-            background: rgba(20, 20, 20, 0.85); /* Frosted dark backdrop */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px 0 0 12px; /* Rounded only on the left */
-            padding: 1.25rem;
-            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-            transition: right 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Elegant spring-like slide */
-            z-index: 10;
-            cursor: pointer;
-            text-align: left;
         }
 
-        /* This slides the card onto the image (adjust "right: 0" to change how far in it goes) */
-        .next-up-overlay-card.active {
-        right: 0px; 
-        }
+        /* Ensure the image container allows absolute positioning inside it */
+.slide-stage {
+    position: relative !important;
+    overflow: hidden; /* Keeps the card hidden off-screen until it slides in */
+}
 
-        .next-up-overlay-card:hover {
-        background: rgba(30, 30, 30, 0.95);
-        border-color: #ff4500; /* Subtle highlight on hover */
-        }
+/* The recommendation card container */
+.next-up-overlay-card {
+    position: absolute;
+    top: 50%;
+    right: -340px; /* Start completely hidden off-screen to the right */
+    transform: translateY(-50%); /* Perfectly center it vertically */
+    width: 260px;
+    background: rgba(20, 20, 20, 0.85); /* Frosted dark backdrop */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px 0 0 12px; /* Rounded only on the left */
+    padding: 1.25rem;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+    transition: right 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Elegant spring-like slide */
+    z-index: 10;
+    cursor: pointer;
+    text-align: left;
+}
 
-        /* Default floating position */
+/* This slides the card onto the image (adjust "right: 0" to change how far in it goes) */
+.next-up-overlay-card.active {
+    right: 0px; 
+}
+
+.next-up-overlay-card:hover {
+    background: rgba(30, 30, 30, 0.95);
+    border-color: #ff4500; /* Subtle highlight on hover */
+}
+
+
+/* Default floating position */
 .floating-audio-btn {
   position: fixed;
   bottom: 24px;
@@ -606,101 +703,6 @@
   30% { transform: scale(1.22) rotate(-8deg); }
   60% { transform: scale(1.1) rotate(8deg); }
 }
-
-        /* --- Modals Framework --- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px); 
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 2000;
-            justify-content: center; align-items: center; padding: 20px;
-        }
-        .modal-box {
-            background-color: var(--modal-bg);
-            width: 100%; max-width: 500px; border-radius: 8px; padding: 32px;
-            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border: 1px solid var(--border-color);
-            animation: modalPop 0.3s ease;
-        }
-        .modal-close-btn {
-            position: absolute; top: 20px; right: 20px;
-            background: none; border: none; font-size: 24px;
-            color: var(--text-muted); cursor: pointer; line-height: 1;
-        }
-        .modal-close-btn:hover { color: var(--text-main); }
-        .modal-title { font-family: var(--font-serif); font-size: 24px; margin-bottom: 16px; }
-        .modal-body { font-size: 15px; line-height: 1.6; color: var(--text-muted); max-height: 400px; overflow-y: auto; }
-
-        /* --- Footer --- */
-        .premium-footer {
-            background-color: var(--footer-bg); color: var(--footer-text);
-            width: 100%; padding: 60px 24px 40px 24px; margin-top: auto; 
-            border-top: 1px solid var(--border-color); position: relative; z-index: 1100; 
-        }
-        .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
-        .footer-newsletter-section { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 32px; }
-        .newsletter-info { max-width: 450px; }
-        .newsletter-info h4 { font-family: var(--font-serif); font-size: 20px; color: #ffffff; margin-bottom: 8px; }
-        .newsletter-info p { font-size: 14px; color: var(--footer-text); line-height: 1.5; }
-        .newsletter-form { display: flex; width: 100%; max-width: 400px; gap: 8px; }
-        .newsletter-input { flex: 1; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 16px; border-radius: 4px; color: #ffffff; font-size: 14px; outline: none; }
-        .newsletter-submit-btn { background-color: #ffffff; color: #1a1a1a; border: none; padding: 0 20px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
-        .newsletter-submit-btn:hover {
-            background-color: #e5e5e5;
-        }
-        .footer-top-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-        .footer-brand { font-family: var(--font-serif); font-size: 18px; font-weight: 600; color: #ffffff; }
-
-        .footer-bottom-row { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; display: flex; justify-content: space-between; font-size: 12px; }
-
-        .toast-notification {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background-color: var(--text-main); color: var(--bg-color); padding: 12px 24px;
-            border-radius: 4px; font-size: 14px; font-weight: 500; z-index: 3000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            opacity: 0; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-        }
-        .toast-notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-        /* --- CSS Animation Utilities --- */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-
-        @media (max-width: 768px) {
-            .nav-arrow { font-size: 28px; padding: 10px 4px; }
-            .slide-stage { max-width: calc(100% - 70px); min-height: 200px; }
-            .slide-img { height: 250px; }
-            .main-story-title { font-size: 24px; }
-            .slide-headline { font-size: 20px; }
-            .slide-body-text { font-size: 15px; }
-            .mega-next-btn { width: 100%; }
-            .footer-newsletter-section { flex-direction: column; align-items: stretch; }
-            .newsletter-form { max-width: 100%; }
-            .footer-top-row { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .footer-bottom-row { flex-direction: column; gap: 10px; }
-            .header-meta-row { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .action-group { width: 100%; justify-content: flex-start; }
-            body {
-            /* Scales the entire visual layout down to 50% size */
-            zoom: 0.5; 
-        
-            /* Fallback for browsers that don't fully support 'zoom' */
-            -moz-transform: scale(0.5);
-            -moz-transform-origin: top center;
-            }
-
-            /* OVERRIDE: Prevent the footer from stacking into a column at 50% zoom */
-            .footer-top-row { 
-                flex-direction: row !important; 
-                align-items: center !important; 
-                justify-content: space-between !important;
-                gap: unset !important; /* Clears the vertical gap */
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -713,7 +715,7 @@
             <button class="theme-toggle-btn" id="theme-btn" onclick="toggleTheme()">Dark Mode</button>
         </div>
         <nav class="header-nav">
-            <button onclick="openModal('about-modal')">About</button>
+            <button onclick="openModal('about-modal')">About Me</button>
             <button onclick="openModal('privacy-modal')">Privacy</button>
         </nav>
     </header>
@@ -740,6 +742,7 @@
                 <p style="margin-bottom:12px;">I only collect data that you directly provide to me. Specifically, when you sign up via the footer to receive article alerts, I store your email address in a secure space.</p>
                 <h5 style="color:var(--text-main); margin:16px 0 8px 0; font-size:16px;">2. Local Infrastructure Storage Framework</h5>
                 <p style="margin-bottom:12px;">To maintain an ultra-fast environment without remote database tracking profiles, I utilize minor browser LocalStorage keys. This handles storing personal interface state features (dark mode preferences) and marking whether you have read a story locally on your own device.</p>
+                
             </div>
         </div>
     </div>
@@ -750,11 +753,16 @@
         <button id="lofi-toggle" class="floating-audio-btn" aria-label="Toggle ambient music" title="Toggle ambient music">
         <span id="audio-icon">🔇</span>
         </button>
+
         <main class="app-container">
-            <div class="content-wrapper">
+
+        <div class="content-wrapper">
+
+        
 
             <section id="homepage-view">
                 <h1 class="feed-title">Personal Logs<p style="font-size: 13px;text-transform: uppercase;letter-spacing: 1px;font-weight: 600;color: var(--text-muted);">From The Mind Of A Student</p></h1>
+
 
     <!--Filter trigger button -->
     <div class="filter-controls-container" style="text-align: center; margin: 1.5rem 0;">
@@ -777,8 +785,9 @@
             <button onclick="closeFilterOverlay()" class="btn-cancel">Cancel</button>
             <button onclick="applyTagFilters()" class="btn-confirm">Confirm Selection</button>
         </div>
-        </div>
     </div>
+
+</div>
 
                 <div id="feed-container"></div>
             </section>
@@ -794,8 +803,9 @@
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                                 Share Visual Log
                             </button>
+                          </div>
+                          
 
-                        </div>
                     </div>
 
                     <h2 class="main-story-title" id="story-main-title">Loading...</h2>
@@ -816,9 +826,8 @@
                     <button class="mega-next-btn" id="mega-action-btn" onclick="nextSlide()">Next Log &rarr;</button>
                 </div>
 
-
             </section>
-
+            </section>
         </div>
         </main>
 
@@ -865,10 +874,10 @@
                 title: "Taking A Break",
                 excerpt: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>I enjoy walking more than taking a bus and this unlocked a new hobby of taking pictures of the sky or nature with my phone.<br><br><div class='article-meta'><span>5 min read</span></div>",
                 slides: [
-                    { headline: "<div style='text-align: center;'>Walking as a Hobbie</div>", body: "One of my favourite things to do is to walk around town (whether it be night or day) or just anywhere with an amazing scenery, and capture a bunch of pictures with my phone. I do this when I'm bored or simply tired of being indoors for like a week. Because I do most things alone— I sometimes just come up with something random to do— like going to the grocery store, but instead of going to a store that's 5 minutes away I choose to go to one that's like 60 minutes away. I guess you can say that walking is one of my hobbies.", img: "images/travel.jpg" },
-                    { headline: "<div style='text-align: center;'>Discovering new Places</div>", body: "It might sound weird to some but this brings me peace of mind— feeling the breeze and the warmth of the sun makes it all the more worth it— plus I get to discover new places by walking down paths I've never walked before (which I do a lot by the way!). I have discovered so many parks doing this and at times I just sit and just relax for a while before moving to my destination.", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "<div style='text-align: center;'>The Mind of an Overthinker</div>", body: "I don't know if this applies to everyone, but for me personally— I feel like sitting and doing nothing gets me tired than going out and moving my legs. At times it is essential to do absolutely nothing and be with you thoughts, like meditating for example, but for me personally I just don't actively meditate because I end up overthinking about something that happened 10 year ago— which is funny now that I think of it.", img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "<div style='text-align: center;'>Touching Some Grass</div>", body: "I learned that taking a walk in nature or just touching some grass resets my focus, not in the sense of a temporary focus but more like it brings me back to the path of the plan I have laid out for the upcoming 10 years of my life. As an introvert myself I feel like this is an easy thing that anyone can just do without feeling overwhelmed or the need of having a friend in order to have fun. ", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80" }
+                    { headline: "<div style='text-align: center;'>Walking as a Hobbie</div>", body: "One of my favourite things to do is to walk around town (whether it be night or day) or just anywhere with an amazing scenery, and capture a bunch of pictures with my phone. I do this when I'm bored or simply tired of being indoors for like a week. Because I do most things alone— I sometimes just come up with something random to do— like going to the grocery store, but instead of going to a store that's 5 minutes away I choose to go to one that's like 60 minutes away. I guess you can say that walking is one of my hobbies.", img: "images/cloud2.jpg" },
+                    { headline: "<div style='text-align: center;'>Discovering new Places</div>", body: "It might sound weird to some but this brings me peace of mind— feeling the breeze and the warmth of the sun makes it all the more worth it— plus I get to discover new places by walking down paths I've never walked before (which I do a lot by the way!). I have discovered so many parks doing this and at times I just sit and just relax for a while before moving to my destination.", vid: "videos/park_pan.mp4" },
+                    { headline: "<div style='text-align: center;'>The Mind of an Overthinker</div>", body: "I don't know if this applies to everyone, but for me personally— I feel like sitting and doing nothing gets me tired than going out and moving my legs. At times it is essential to do absolutely nothing and be with you thoughts, like meditating for example, but for me personally I just don't actively meditate because I end up overthinking about something that happened 10 year ago— which is funny now that I think of it.", img: "images/cloud1.jpg" },
+                    { headline: "<div style='text-align: center;'>Touching Some Grass</div>", body: "I learned that taking a walk in nature or just touching some grass resets my focus, not in the sense of a temporary focus but more like it brings me back to the path of the plan I have laid out for the upcoming 10 years of my life. As an introvert myself I feel like this is an easy thing that anyone can just do without feeling overwhelmed or the need of having a friend in order to have fun. ", img: "images/touch_grass.jpg" }
                 ]
             },
 
@@ -887,6 +896,7 @@
 
         ];
 
+
         let activeArticle = null;
         let activeSlideIndex = 0;
 
@@ -904,7 +914,9 @@
         const rightArrowBtn = document.getElementById("right-arrow-btn");
 
 
+
     function renderHomepageFeed() {
+
     if (!feedContainer) return;
     feedContainer.innerHTML = "";
     
@@ -939,6 +951,7 @@
             <div class="article-excerpt">${art.excerpt}</div>
         `;
                 feedContainer.appendChild(card);
+
             });
         }
 
@@ -962,15 +975,16 @@
             if (articleView) articleView.style.display = "block";
 
             localStorage.setItem(`read_${activeArticle.id}`, "true");
+            
             renderSlideState();
             window.scrollTo(0,0); 
+
         }
 
-
+       
 function renderSlideState() {
-
-        const totalSlides = activeArticle.slides.length;
-        const currentData = activeArticle.slides[activeSlideIndex];
+    const totalSlides = activeArticle.slides.length;
+    const currentData = activeArticle.slides[activeSlideIndex];
     
     if (progressTracker && mediaViewport && textViewport && megaActionBtn) {
         progressTracker.innerText = `Slide ${activeSlideIndex + 1} of ${totalSlides}`;
@@ -986,7 +1000,7 @@ function renderSlideState() {
         mediaViewport.innerHTML = `
         <img src="${currentData.img}" alt="Visual Narrative" class="slide-img" id="stage-image">`;
 }
-        
+
         textViewport.innerHTML = `
             <h3 class="slide-headline">${currentData.headline}</h3>
             <p class="slide-body-text">${currentData.body}</p>
@@ -994,15 +1008,7 @@ function renderSlideState() {
         
         if (activeSlideIndex === totalSlides - 1) {
             megaActionBtn.innerHTML = "Finish & Return Home &larr;";
-            trackStoryCompletion(activeArticle.id);
 
-            // textViewport.innerHTML += `
-            //             <div class="terminal-billboard-ad" style="margin-top: 2rem; padding: 1.25rem; background: rgba(0,0,0,0.02); border-radius: 6px; border: 1px solid #eee;">
-            //                 <small style="display:block; margin-bottom: 0.25rem; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; font-weight:600; opacity: 0.5;">Sponsored Milestone Insight</small>
-            //                 <h4 style="margin: 0 0 0.5rem 0; font-size: 1.05rem;">Ready to execute your next strategic leap?</h4>
-            //                 <p style="margin: 0; font-size: 0.88rem; opacity: 0.85; line-height:1.4;">🔥🔥🔥Access specialized toolkits and student-centric support assets built to streamline relocation friction. <a href="https://www.google.com" target="_blank" style="text-decoration: underline; font-weight: bold; color: inherit;">Learn More &rarr;</a></p>
-            //             </div>
-            //         `;
 
             // 2. Fetch a dynamic recommendation (Excluding current story)
             const otherStories = articlesDatabase.filter(article => article.id !== activeArticle.id);
@@ -1013,7 +1019,7 @@ function renderSlideState() {
                 // 3. Create the recommendation overlay card element
                 const overlayCard = document.createElement('div');
                 overlayCard.className = 'next-up-overlay-card';
-                overlayCard.onclick = () => loadArticle(randomStory.id); // Triggers router function
+                overlayCard.onclick = () => loadArticle(randomStory.id); // Triggers your router function
                 
                 overlayCard.innerHTML = `
                     <span style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #ff4500; font-weight: bold; display: block; margin-bottom: 0.25rem;">Up Next</span>
@@ -1183,12 +1189,10 @@ function handleFacebookFollow(event) {
     }
 }
 
-
-
 // Global array to store currently selected tag filters
 let selectedTags = [];
 
-// 1. Open Overlay and dynamically render unique tags from database
+// 1. Open Overlay and dynamically render unique tags from your actual database
 function openFilterOverlay() {
     const overlay = document.getElementById('filter-overlay');
     const tagsGrid = document.getElementById('filter-tags-grid');
@@ -1221,7 +1225,7 @@ function closeFilterOverlay() {
     document.getElementById('filter-overlay').style.display = 'none';
 }
 
-// 3. Save checkbox states and re-run homepage feed function
+// 3. Save checkbox states and re-run your exact homepage feed function
 function applyTagFilters() {
     const checkboxes = document.querySelectorAll('.tag-pill-checkbox');
     selectedTags = [];
@@ -1234,16 +1238,16 @@ function applyTagFilters() {
 
     closeFilterOverlay();
     
-    // Fires homepage rendering function to redraw the cards
+    // Fire your homepage rendering function to redraw the cards
     renderHomepageFeed(); 
 }
+
 
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.innerText = text;
     return div.innerHTML;
 }
-
 
 
 
@@ -1297,6 +1301,8 @@ if (footer && audioBtn) {
   window.addEventListener('scroll', updateButtonPosition, { passive: true });
   window.addEventListener('resize', updateButtonPosition);
 }
+
+
 
 
 // --- 1. Playlist Setup ---
@@ -1387,6 +1393,16 @@ audioBtn.addEventListener('click', () => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
 // Run this immediately when the page loads
 window.addEventListener('DOMContentLoaded', () => {
     // 1. Checking the URL for "?story=..."
@@ -1401,6 +1417,8 @@ window.addEventListener('DOMContentLoaded', () => {
         showHome(); // Homepage loading function
     }
 });
+
 </script>
+
 </body>
 </html>
