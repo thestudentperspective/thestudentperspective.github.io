@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timetable</title>
+    <style>
+        body{
+            background-color: seagreen;
+            cursor: default;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: serif;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .day, .time {
+            background-color: lightgray;
+            color: black;
+        }
+       
+            
+        h1{
+            text-align: center;
+            font-family: sans-serif;
+            color: white;
+        }
+        .due{
+            color: black;
+            font-weight: bold;
+            font-size: 20px;
+
+        }
+        .to_read{
+            color: red;
+            font-weight: 15px;
+            font-weight: bolder;
+        }
+        #day1, #day2, #day3, #day4, #day5, #day6, #day7{
+            text-align: justify;
+            color: red;
+            font-size: 16px;
+
+        }
+        .fixed{
+            background-color: red;
+            cursor: pointer;
+        }
+        .freetime{
+            background-color: deepskyblue;
+        }
+
+        .fullname{
+            font-size: 11px;
+            color: black;
+            font-weight: 500;
+            font-family: sans-serif;
+        }
+        .time{
+            color: red;
+            font-size: 11px;
+        }
+
+            h2{
+            font-size: 15px;
+            color: white;
+            text-align: center;
+        }
+
+
+                textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            background-color: seagreen;
+            color: white;
+            font-size: 15px;
+        }
+        button {
+            margin-right: 10px;
+            text-align: center;
+            cursor: pointer;
+            
+        }
+        .button-container {
+            text-align: center;
+        }
+        textarea{
+            border: none;
+            text-align: justify;
+        }
+        del{
+            color: white;
+        }
+
+                .selected-cell { background-color: #d3d3d3; }
+        #overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center;
+        }
+                #monday, #tuesday, #wednesday, #thursday, #friday, #saturday, #sunday { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center;
+        }
+        #textarea-container { background: #fff; padding: 20px; width: 80%; max-width: 600px; }
+        textarea { width: 100%; height: 200px; }
+        .me{
+            text-align: right;
+            font-size: 9px;
+            margin: 1px 1px 2px;
+            color: white;
+        }
+        .me:hover{
+            transition: 1.5s;
+            transform: rotateX(360deg);
+        }
+        .mytimetable:hover{
+            color: deepskyblue;
+            transition: 1s;
+            cursor: crosshair;
+        }
+        .fixed:hover{
+            background-color: darkred;
+            transition: 1s;
+        }
+    </style>
+
+</head>
+<body>
+    <h1 class="mytimetable">MY TIMETABLE</h1>
+    <p class="me">Created by Paul Rampoli</p>
+
+
+
+    <table id="myTable">
+        <tr>
+            <td data-cell-id="cell8" style="background-color: lightgray;color: black;cursor: pointer;"><m style="color: blueviolet; font-size: 10px;font-weight: bold;font-family: comic sans MS;">TEST</m></td>
+            <td class="day">1<br><m class="time">08:30 - 09:15</m></td>
+            <td class="day">2<br><m class="time">09:15 - 10:00</m></td>
+            <td class="day">3<br><m class="time">10:00 - 10:45</m></td>
+            <td class="day">LOG BREAK<br><m class="time">10:45 - 11:00</m></td>
+            <td class="day">4<br><m class="time">11:00 - 11:45</m></td>
+            <td class="day">5<br><m class="time">11:45 - 12:30</m></td>
+            <td class="day">LUNCH<br><m class="time">12:30 - 13:00</m></td>
+            <td class="day">6<br><m class="time">13:00 - 13:45</m></td>
+            <td class="day">7<br><m class="time">13:45 - 14:30</m></td>
+            <td class="day">8<br><m class="time">14:30 - 15:15</m></td>
+            <td class="day">LOG BREAK<br><m class="time">15:15 - 15:30</m></td>
+            <td class="day">9<br><m class="time">15:30 - 16:15</m></td>
+            <td class="day">10<br><m class="time">16:15 - 17:00</m></td>
+            
+
+        </tr>
+
+        <tr>
+            <td class="day" onclick="showmonday()" style="cursor: pointer;"><m id="day1"></m></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td rowspan="7" style="transform: rotate(270deg);letter-spacing: 1.5px;font-family: comic sans ms;" class="break">LOG BREAK</td>
+            <td class="freetime"></td>
+            <td data-cell-id="cell1" class="fixed">MEP 150S</td>
+            <td rowspan="7" style="transform: rotate(270deg);letter-spacing: 1.5px;font-family: comic sans ms;" class="break">LUNCH</td>
+            <td data-cell-id="cell1" class="fixed">MEP 150S</td>
+            <td class="freetime"></td>
+            <td data-cell-id="cell2" class="fixed">MEK 152S</td>
+            <td rowspan="7" style="transform: rotate(270deg);letter-spacing: 1.5px;font-family: comic sans ms;" class="break">LOG BREAK</td>
+            <td data-cell-id="cell2" class="fixed" colspan="2">MEK 152S</td>
+        </tr>
+        
+        <tr>
+            <td class="day" onclick="showtuesday()" style="cursor: pointer;"><m id="day2"></m></td>
+            <td data-cell-id="cell3" class="fixed" colspan="2">MCS 150S</td>
+            <td data-cell-id="cell4" class="fixed">MMT 152S</td>
+            <td data-cell-id="cell4" class="fixed" colspan="2">MMT 152S</td>
+            <td class="freetime"></td>
+            <td data-cell-id="cell1" class="fixed" colspan="2">MEP 150S</td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+
+        </tr>
+        
+        <tr>
+            <td class="day" onclick="showwednesday()" style="cursor: pointer;"><m id="day3"></m></td>
+            <td data-cell-id="cell5" class="fixed" colspan="2">MMS 150S</td>
+            <td data-cell-id="cell6" class="fixed">CSM 150S</td>
+            <td data-cell-id="cell6" class="fixed">CSM 150S</td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+
+        </tr>
+        
+        <tr>
+            <td class="day" onclick="showthursday()" style="cursor: pointer;"><m id="day4"></m></td>
+            <td data-cell-id="cell7" class="fixed" colspan="3">MDD 151S</td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+
+
+        </tr>  
+
+        <tr>
+            <td class="day" onclick="showfriday()" style="cursor: pointer;"><m id="day5"></m></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td data-cell-id="cell4" class="fixed">MMT 152S</td>
+            <td data-cell-id="cell4" class="fixed" colspan="2">MMT 152S</td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+        </tr>
+
+        <tr>
+            <td class="day" onclick="showsaturday()" style="cursor: pointer;"><m id="day6"></m></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+
+        </tr>
+
+        <tr>
+            <td class="day" onclick="showsunday()" style="cursor: pointer;"><m id="day7"></m></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+            <td class="freetime"></td>
+
+        </tr>
+
+    </table>
+
+    <h2>NOTES</h2>
+    <textarea id="notes" placeholder="My Notes"></textarea>
+    <div class="button-container">
+    <button onclick="saveNotes()">Save</button>
+    <button onclick="downloadNotes()">Download</button>
+    <input type="file" id="fileInput" style="display: none;" onchange="loadNotes(event)">
+    <button onclick="document.getElementById('fileInput').click();">Load</button>
+</div>
+<div id="overlay">
+    <div id="textarea-container">
+        <h3 id="cell-title"></h3>
+        <textarea id="notesoverlay"></textarea><br>
+        <button onclick="closeOverlay()">Close</button>
+        <button onclick="saveNotesCourse()">Save</button>
+        <button onclick="downloadNotesCourse()">Download</button>
+    </div>
+
+</div>
+<div id="monday">
+    <div id="textarea-container">
+        <h3 id="cell-title">Important</h3><p style="text-align: right;transform: translateY(-40px);color: red;font-size: 16px;">MONDAY</p>
+        <p>Marine Engineering Physics</p>
+        <p>Marine Engineering Knowledge</p>
+        <p>Marine Engineering Mathematics</p>
+        <button onclick="closemonday()">Close</button>
+    </div>
+</div>
+<div id="tuesday">
+    <div id="textarea-container">
+        <h3 id="cell-title">Important</h3><p style="text-align: right;transform: translateY(-40px);color: red;font-size: 16px;">TUESDAY</p>
+        <p>Marine Engineering Physics</p>
+        <p>Marine Engineering Mathematics</p>
+        <p>Marine Engineering Material Science</p>
+        <button onclick="closetuesday()">Close</button>
+    </div>
+</div>
+<div id="wednesday">
+    <div id="textarea-container">
+        <h3 id="cell-title">Important</h3><p style="text-align: right;transform: translateY(-40px);color: red;font-size: 16px;">WEDNESDAY</p>
+        <p>Marine Engineering Physics</p>
+        <p>Marine Engineering Knowledge</p>
+        <p>Marine Engineering Mathematics</p>
+        <button onclick="closewednesday()">Close</button>
+    </div>
+</div>
+<div id="thursday">
+    <div id="textarea-container">
+        <h3 id="cell-title">Important</h3><p style="text-align: right;transform: translateY(-40px);color: red;font-size: 16px;">THURSDAY</p>
+        <p>Marine Engineering Physics</p>
+        <p>Marine Engineering Mathematics</p>
+        <p>Marine Engineering Material Science</p>
+        <button onclick="closethursday()">Close</button>
+    </div>
+</div>
+<div id="friday">
+    <div id="textarea-container">
+        <h3 id="cell-title">Important</h3><p style="text-align: right;transform: translateY(-40px);color: red;font-size: 16px;">FRIDAY</p>
+        <p>Marine Engineering Physics</p>
+        <p>Marine Engineering Knowledge</p>
+        <p>Marine Engineering Mathematics</p>
+        <button onclick="closefriday()">Close</button>
+    </div>
+</div>
+
+<div id="saturday">
+    <div id="textarea-container">
+        <h3 id="cell-title">Important</h3><p style="text-align: right;transform: translateY(-40px);color: red;font-size: 16px;">SATURDAY</p>
+        <p>Marine Engineering Knowledge</p>
+        <p>Marine Engineering Material Science</p>
+        <button onclick="closesaturday()">Close</button>
+    </div>
+</div>
+<div id="sunday">
+    <div id="textarea-container">
+        <h3 id="cell-title">Important</h3><p style="text-align: right;transform: translateY(-40px);color: red;font-size: 16px;">SUNDAY</p>
+        <p>Marine Engineering Physics</p>
+        <p>Marine Engineering Knowledge</p>
+        <p>Marine Engineering Material Science</p>
+        <button onclick="closesunday()">Close</button>
+    </div>
+</div>
+    <script type="text/javascript">
+
+        function getMondayOfCurrentWeek() {
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Adjust for Sunday
+            const monday = new Date(today);
+            monday.setDate(today.getDate() + diff);
+            return monday;
+        }
+
+        function getDatesForWeek() {
+            const startOfWeek = getMondayOfCurrentWeek();
+            
+            for (let i = 0; i < 7; i++) {
+                const currentDay = new Date(startOfWeek);
+                currentDay.setDate(startOfWeek.getDate() + i);
+                const dateStr = currentDay.toDateString();
+                document.getElementById(`day${i + 1}`).innerText = dateStr;
+            }
+        }
+
+        getDatesForWeek();
+    </script>
+
+            <script>
+        // Autosave notes
+        document.getElementById('notes').addEventListener('input', function() {
+            localStorage.setItem('timetableNotes', this.value);
+        });
+
+        // Load saved notes on page load
+        window.onload = function() {
+            document.getElementById('notes').value = localStorage.getItem('timetableNotes') || '';
+        };
+
+        // Save notes
+        function saveNotes() {
+            localStorage.setItem('timetableNotes', document.getElementById('notes').value);
+            alert('Notes saved!');
+        }
+
+        // Download notes as a file
+        function downloadNotes() {
+            const notes = document.getElementById('notes').value;
+            const blob = new Blob([notes], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'timetable_notes.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Load notes from a file
+        function loadNotes(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const contents = e.target.result;
+                document.getElementById('notes').value = contents;
+                localStorage.setItem('timetableNotes', contents);
+            };
+            reader.readAsText(file);
+        }
+    </script>
+    <script>
+    let activeCellId = null;
+
+    document.querySelectorAll("#myTable td").forEach(cell => {
+        cell.addEventListener("click", () => {
+            if (cell.classList.contains("day")) return; // Ignore restricted cells
+            if (cell.classList.contains("freetime")) return; // Ignore restricted cells
+            if (cell.classList.contains("break")) return; // Ignore restricted cells
+            activeCellId = cell.getAttribute("data-cell-id");
+            document.getElementById("cell-title").innerText = cell.innerText;
+            document.getElementById("notesoverlay").value = localStorage.getItem(activeCellId) || "";
+            showOverlay();
+        });
+    });
+
+
+    function showOverlay() { document.getElementById("overlay").style.display = "flex"; }
+    function closeOverlay() { document.getElementById("overlay").style.display = "none"; }
+
+    function showmonday() { document.getElementById("monday").style.display = "flex"; }
+    function closemonday() { document.getElementById("monday").style.display = "none"; }
+
+        function showtuesday() { document.getElementById("tuesday").style.display = "flex"; }
+    function closetuesday() { document.getElementById("tuesday").style.display = "none"; }
+
+        function showwednesday() { document.getElementById("wednesday").style.display = "flex"; }
+    function closewednesday() { document.getElementById("wednesday").style.display = "none"; }
+
+        function showthursday() { document.getElementById("thursday").style.display = "flex"; }
+    function closethursday() { document.getElementById("thursday").style.display = "none"; }
+
+            function showfriday() { document.getElementById("friday").style.display = "flex"; }
+    function closefriday() { document.getElementById("friday").style.display = "none"; }
+
+        function showsaturday() { document.getElementById("saturday").style.display = "flex"; }
+    function closesaturday() { document.getElementById("saturday").style.display = "none"; }
+
+        function showsunday() { document.getElementById("sunday").style.display = "flex"; }
+    function closesunday() { document.getElementById("sunday").style.display = "none"; }
+
+    function saveNotesCourse() {
+        localStorage.setItem(activeCellId, document.getElementById("notesoverlay").value);
+        alert("Notes saved!");
+    }
+
+    function downloadNotesCourse() {
+        let notes = document.getElementById("notesoverlay").value;
+        let blob = new Blob([notes], { type: "text/plain" });
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = activeCellId + "_notes.txt";
+        link.click();
+    }
+</script>
+
+</body>
+</html>

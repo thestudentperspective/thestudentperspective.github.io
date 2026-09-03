@@ -8,8 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght=0,600;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
     <style>
         /* --- CSS Reset & Themes Framework --- */
@@ -21,6 +20,19 @@
         }
         
         :root {
+            
+            --bg-color: #0f0f0f;
+            --bg-stage: #1a1a1a;
+            --text-main: #f5f5f5;
+            --text-muted: #9e9e9e;
+            --accent-color: #f5f5f5;
+            --border-color: #262626;
+            --footer-bg: #080808;
+            --footer-text: #7a7a7a;
+            --modal-bg: #161616;
+        }
+
+        [data-theme="dark"] {
             --bg-color: #ffffff;
             --bg-stage: #fafafa;
             --text-main: #191919;
@@ -36,21 +48,7 @@
             --accent-red: #e02424;
             --tip-bg: #F5E8D8;
             --tip-line: #FF6F61;
-        }
 
-        [data-theme="dark"] {
-            --bg-color: #0f0f0f;
-            --bg-stage: #1a1a1a;
-            --text-main: #f5f5f5;
-            --text-muted: #9e9e9e;
-            --accent-color: #f5f5f5;
-            --border-color: #262626;
-            --footer-bg: #080808;
-            --footer-text: #7a7a7a;
-            --modal-bg: #161616;
-            --tip-bg: #1C1C1C;
-            --tip-color: #F5E8D8;
-            --tip-line: #FF6F61;
         }
 
         body {
@@ -64,16 +62,6 @@
             min-height: 100vh;
         }
 
-        .tip-box {
-            background-color: var(--tip-bg);
-            color: var(--tip-color);
-            display: flex;
-            align-items: flex-start;       /* Align text with top of line */
-            border-left: 4px solid var(--tip-line); /* Vertical line */
-            padding-left: 12px;             /* Space between line and text */
-            margin: 10px 0;
-            line-height: 1.5;
-        }
 
         /* --- Medium-Style Sticky Header --- */
         .sticky-header {
@@ -157,64 +145,6 @@
             max-width: 800px;
             width: 100%;
             padding: 24px;
-        }
-
-            /* --- Strategic Non-Disruptive Ad Zones --- */
-        .ad-placeholder {
-            width: 100%;
-            background-color: var(--bg-stage);
-            border: 1px dashed var(--border-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 11px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 500;
-            border-radius: 4px;
-            margin: 20px 0;
-        }
-        .ad-top {
-            height: 90px;
-            max-width: 728px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* Sidebar layout default (hidden on smaller screens) */
-        .ad-sidebar {
-            display: none; 
-            width: 160px;
-            height: 600px;
-            background-color: var(--bg-stage);
-            border: 1px dashed var(--border-color);
-            justify-content: center;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: sticky;
-            top: 100px; 
-            align-self: flex-start; 
-            margin-top: 44px;
-        }
-
-        /* Mid-Slide Inline Ad Stage Container */
-        .ad-break-stage {
-            width: 100%;
-            height: 100%;
-            min-height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--bg-stage);
-            color: var(--text-muted);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px dashed var(--border-color);
         }
 
         /* --- Homepage / Feed View --- */
@@ -445,14 +375,7 @@
             align-items: center;
             gap: 8px;
         }
-        .metric-display {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 13px;
-            color: var(--text-muted);
-            padding: 4px 8px;
-        }
+
         .interactive-btn {
             background: none;
             border: 1px solid var(--border-color);
@@ -560,21 +483,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-    .reel_video{
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background-color: #1877F2;
-        color: #ffffff;
-        text-decoration: none;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        font-weight: bold;
-        padding: 10px 18px;
-        border-radius: 25px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: transform 0.2s ease, background-color 0.2s ease;
-    }
     .facebook_prof{
             display: inline-flex;
             align-items: center;
@@ -614,17 +522,90 @@
             z-index: 10;
             cursor: pointer;
             text-align: left;
-    }
+        }
 
-    /* This slides the card onto the image (adjust "right: 0" to change how far in it goes) */
-    .next-up-overlay-card.active {
+        /* This slides the card onto the image (adjust "right: 0" to change how far in it goes) */
+        .next-up-overlay-card.active {
         right: 0px; 
-    }
+        }
 
-    .next-up-overlay-card:hover {
+        .next-up-overlay-card:hover {
         background: rgba(30, 30, 30, 0.95);
         border-color: #ff4500; /* Subtle highlight on hover */
-    }
+        }
+
+        /* Default floating position */
+.floating-audio-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  transition: bottom 0.25s ease, transform 0.2s ease, background 0.2s ease;
+  user-select: none;
+}
+
+
+
+/* Re-triggerable Bounce Animation */
+.floating-audio-btn.trigger-footer-bounce {
+  animation: footerPopBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes footerPopBounce {
+  0% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-18px) scale(1.15); } /* Playful upward pop */
+  70% { transform: translateY(4px) scale(0.95); }  /* Soft landing spring */
+  100% { transform: translateY(0) scale(1); }
+}
+
+.floating-audio-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.08);
+}
+
+/* --- Animation 1: Jump & Bounce --- */
+.anim-bounce {
+  animation: jumpBounce 0.6s ease infinite;
+}
+
+@keyframes jumpBounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-14px) scaleY(1.05); }
+  60% { transform: translateY(0) scaleY(0.95); }
+}
+
+/* --- Animation 2: Subtle Shake --- */
+.anim-shake {
+  animation: subtleShake 0.25s ease-in-out infinite;
+}
+
+@keyframes subtleShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px) rotate(-3deg); }
+  75% { transform: translateX(4px) rotate(3deg); }
+}
+
+/* --- Animation 3: Surprise (Pulse & Beat Wobble) --- */
+.anim-pulse-wobble {
+  animation: pulseWobble 0.75s ease-in-out infinite;
+}
+
+@keyframes pulseWobble {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  30% { transform: scale(1.22) rotate(-8deg); }
+  60% { transform: scale(1.1) rotate(8deg); }
+}
 
         /* --- Modals Framework --- */
         .modal-overlay {
@@ -672,11 +653,7 @@
         }
         .footer-top-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
         .footer-brand { font-family: var(--font-serif); font-size: 18px; font-weight: 600; color: #ffffff; }
-        .whatsapp-link { display: inline-flex; align-items: center; gap: 8px; color: #25d366; text-decoration: none; font-size: 14px; font-weight: 600; border: 1px solid rgba(37, 211, 102, 0.3); padding: 8px 16px; border-radius: 20px; }
-        .whatsapp-link:hover {
-            background-color: rgba(37, 211, 102, 0.1);
-            transform: translateY(-1px);
-        }
+
         .footer-bottom-row { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; display: flex; justify-content: space-between; font-size: 12px; }
 
         .toast-notification {
@@ -691,12 +668,6 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        /* --- Media Queries (Cleanly separates big screens from mobile) --- */
-        @media (min-width: 1200px) {
-            .ad-sidebar {
-                display: flex; /* Sidebars ONLY show here */
-            }
-        }
 
         @media (max-width: 768px) {
             .nav-arrow { font-size: 28px; padding: 10px 4px; }
@@ -729,13 +700,7 @@
                 gap: unset !important; /* Clears the vertical gap */
             }
         }
-        .tip-box {border-left-width: 3px; padding-left: 8px; font-size: 15px;}
 
-        /* 🔥🔥🔥🔥--- GLOBAL AD BLOCKING (STEALTH MODE FIX) ---🔥🔥🔥🔥 */
-        .ad-placeholder,
-        .ad-sidebar{
-            display: none !important;
-        }
     </style>
 </head>
 <body>
@@ -758,8 +723,8 @@
             <button class="modal-close-btn" onclick="closeModal('about-modal')">&times;</button>
             <h4 class="modal-title">The Perspective Behind the Lens</h4>
             <p class="modal-body">
-                Everything you read on this site is born from my own experience and told from my perspective. These aren't generic internet tips written by an algorithm; they are the exact lessons, financial wake-up calls, and daily realities I have personally gone through—and am still navigating right now.<br><br>
-                Welcome to the student perspective.
+                I'm Paul—a student based in Cape Town, and this is my personal canvas on the web. <br><br>This site has <b>No ads</b>, <b>no algorithms</b>, and <b>no life lessons</b>. What you read on this site <b>is not</b> generated by AI or driven by metrics—it's a collection of visual logs, walk observations, project breakdowns, and raw daily thoughts told from my perspective.<br><br>
+                <b>Welcome to the student perspective.</b>
             </p>
         </div>
     </div>
@@ -770,13 +735,11 @@
             <h4 class="modal-title">Privacy Policy</h4>
             <div class="modal-body">
                 <p style="margin-bottom:12px;"><strong>Effective Date: June 2026</strong></p>
-                <p style="margin-bottom:12px;">Your privacy is highly valued. This policy outlines how your data is handled across this platform.</p>
-                <h5 style="color:var(--text-main); margin:16px 0 8px 0; font-size:16px;">1. Information We Collect</h5>
-                <p style="margin-bottom:12px;">We only collect data that you directly provide to us. Specifically, when you sign up via our footer to receive article alerts, we store your email address securely.</p>
+                <p style="margin-bottom:12px;">Your privacy is highly valued. This website is Free from Ads, Algorithims and whatevers out there. This policy outlines how your data is handled across this platform.</p>
+                <h5 style="color:var(--text-main); margin:16px 0 8px 0; font-size:16px;">1. Information I Collect</h5>
+                <p style="margin-bottom:12px;">I only collect data that you directly provide to me. Specifically, when you sign up via the footer to receive article alerts, I store your email address in a secure space.</p>
                 <h5 style="color:var(--text-main); margin:16px 0 8px 0; font-size:16px;">2. Local Infrastructure Storage Framework</h5>
-                <p style="margin-bottom:12px;">To maintain an ultra-fast environment without remote database tracking profiles, we utilize minor browser LocalStorage keys. This handles storing personal interface state features (dark mode preferences) and marking whether you have read a story locally on your own machine.</p>
-                <h5 style="color:var(--text-main); margin:16px 0 8px 0; font-size:16px;">3. Global Metrics Cloud Framework</h5>
-                <p style="margin-bottom:12px;">Live total views and story likes are stored securely inside an encrypted cloud infrastructure provider (Supabase). This count is completely aggregated, anonymized, and contains zero tracking cookies or personal indicators.</p>
+                <p style="margin-bottom:12px;">To maintain an ultra-fast environment without remote database tracking profiles, I utilize minor browser LocalStorage keys. This handles storing personal interface state features (dark mode preferences) and marking whether you have read a story locally on your own device.</p>
             </div>
         </div>
     </div>
@@ -784,24 +747,23 @@
     <div class="toast-notification" id="toast-alert">Link copied to clipboard!</div>
 
     <div class="layout-grid">
-        
-        <div class="ad-sidebar">🔥🔥🔥Advertisement</div>
-
+        <button id="lofi-toggle" class="floating-audio-btn" aria-label="Toggle ambient music" title="Toggle ambient music">
+        <span id="audio-icon">🔇</span>
+        </button>
         <main class="app-container">
             <div class="content-wrapper">
-                <div class="ad-placeholder ad-top">🔥🔥🔥Responsive Banner Advertisement</div>
 
             <section id="homepage-view">
-                <h1 class="feed-title">Stories & Lessons<p style="font-size: 13px;text-transform: uppercase;letter-spacing: 1px;font-weight: 600;color: var(--text-muted);">From The Mind Of A Student</p></h1>
+                <h1 class="feed-title">Personal Logs<p style="font-size: 13px;text-transform: uppercase;letter-spacing: 1px;font-weight: 600;color: var(--text-muted);">From The Mind Of A Student</p></h1>
 
-    <!-- The clean, single Filter trigger button -->
+    <!--Filter trigger button -->
     <div class="filter-controls-container" style="text-align: center; margin: 1.5rem 0;">
     <button id="filter-trigger-btn" onclick="openFilterOverlay()" style="background: none; border: 1px solid var(--text-color, #333); color: var(--text-color, #333); padding: 0.5rem 1.5rem; border-radius: 20px; font-weight: 500; cursor: pointer; transition: all 0.2s;">
-        Filter Stories <span>▼</span>
+        Filter Logs <span>▼</span>
     </button>
     </div>
 
-    <!-- The Frosted Glass Filter Overlay -->
+    <!--Filter Overlay -->
     <div id="filter-overlay" class="filter-overlay-backdrop" style="display: none;">
     <div class="filter-modal-card">
         <h3>Filter by Tags</h3>
@@ -827,40 +789,12 @@
                         <div class="slide-progress" id="progress-tracker">Slide 1 of 7</div>
                         
                         <div class="action-group">
-                            <div class="metric-display">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                <span id="view-counter-node">0</span>
-                            </div>
-                            <button class="interactive-btn" id="like-btn-node" onclick="toggleLikeCurrentStory()">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                <span id="like-label-node">Like</span> (<span id="like-counter-node">0</span>)
-                            </button>
+                            
                             <button class="interactive-btn" onclick="shareCurrentStory()">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                                Share Story
+                                Share Visual Log
                             </button>
 
-    <!-- Interactive Container Wrapper -->
-    <div onclick="handleFacebookFollow(event)" style="position: relative; display: inline-block; overflow: hidden; cursor: pointer;">
-        
-        <!-- The Visual Button Layer -->
-        <button class="interactive-btn" style="pointer-events: none;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-            </svg>
-            Follow Page
-        </button>
-
-        <!-- The Functional Facebook Layer -->
-        <div id="fb-follow-plugin"
-             class="fb-follow" 
-             data-href="https://www.facebook.com/profile.php?id=61591206983388" 
-             data-layout="button" 
-             data-size="large" 
-             data-show-faces="false"
-             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.01; pointer-events: auto; scale: 3; transform-origin: top left;">
-        </div>
-    </div>
                         </div>
                     </div>
 
@@ -879,79 +813,14 @@
                 </div>
 
                 <div class="action-bar">
-                    <button class="mega-next-btn" id="mega-action-btn" onclick="nextSlide()">Next Lesson &rarr;</button>
+                    <button class="mega-next-btn" id="mega-action-btn" onclick="nextSlide()">Next Log &rarr;</button>
                 </div>
-<!-- Comment & Discussion Section Wrapper -->
-<section id="discussion-section" style="margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 2rem;">
-    
-    <!-- Dynamic Slide Prompt Box -->
-    <div id="dynamic-discussion-prompt" style="background-color: rgba(128,128,128, 0.08); padding: 1.25rem; border-radius: 8px; border-left: 4px solid var(--text-color, #333); margin-bottom: 2rem;">
-        <h4 style="margin: 0 0 0.5rem 0; font-family: var(--font-serif); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;">Thoughts from the Author</h4>
-        <p id="prompt-text" style="margin: 0; font-size: 15px; line-height: 1.5; font-style: italic; color: var(--text-muted);"></p>
-    </div>
-
-    <!-- Tier 1: The Clean Inline Feed (Shows ONLY the single latest comment) -->
-    <div id="inline-comments-preview" style="margin-bottom: 1.5rem;">
-        <h4 style="font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem;">Latest Perspective</h4>
-        <div id="latest-comment-target"></div>
-    </div>
-
-    <!-- Trigger to see everything -->
-    <button id="show-all-comments-btn" onclick="openCommentsOverlay()" style="background: none; border: 1px solid var(--border-color); color: var(--text-color); padding: 0.5rem 1.25rem; border-radius: 20px; font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 2.5rem; transition: all 0.2s;">
-        Show all comments (<span id="comments-count-badge">0</span>)
-    </button>
-
-    <!-- Tier 2: The Input Boxes (Always visible directly below the show-all button) -->
-    <div id="comment-form-container" style="margin-bottom: 2.5rem;">
-        <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 1rem;">Join the Conversation</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <input type="text" id="comment-author" placeholder="Name (Leave blank for Anonymous)" style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 0.6rem 1rem; border-radius: 6px; font-size: 14px; max-width: 280px;">
-            <textarea id="comment-body" placeholder="Share your perspective on this essay..." rows="3" style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 6px; font-size: 15px; line-height: 1.5; font-family: inherit; resize: vertical;"></textarea>
-            <div style="display: flex; justify-content: flex-end;">
-                <button id="submit-comment-btn" onclick="handleCommentSubmission()" style="background-color: var(--text-color, #333); color: var(--bg-color); border: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer;">
-                    Post Comment
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Tier 3: The Frosted Glass Complete Conversation Overlay -->
-<div id="comments-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); justify-content: center; align-items: center; z-index: 10000; animation: fadeIn 0.25s ease;">
-    <div style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 2rem; border-radius: 16px; max-width: 550px; width: 90%; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
-        
-        <!-- Modal Header -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
-            <h3 style="margin: 0; font-family: var(--font-serif); font-size: 22px;">All Responses</h3>
-            <button onclick="closeCommentsOverlay()" style="background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 0 5px;">&times;</button>
-        </div>
-        
-        <!-- Scrollable Full Conversation Stream -->
-        <div id="modal-comments-stream" style="flex: 1; overflow-y: auto; padding-right: 0.5rem; margin-bottom: 1.5rem;"></div>
-        
-        <!-- Duplicate Input Form Box Inside Modal -->
-        <div style="border-top: 1px solid var(--border-color); padding-top: 1rem;">
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <input type="text" id="modal-comment-author" placeholder="Name (Leave blank for Anonymous)" style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 13px; max-width: 220px;">
-                <textarea id="modal-comment-body" placeholder="Reply with your perspective..." rows="2" style="background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 0.6rem 0.75rem; border-radius: 6px; font-size: 14px; line-height: 1.4; font-family: inherit; resize: none;"></textarea>
-                <div style="display: flex; justify-content: flex-end;">
-                    <button onclick="handleModalCommentSubmission()" style="background-color: var(--text-color, #333); color: var(--bg-color); border: none; padding: 0.5rem 1.25rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px;">
-                        Submit Reply
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
             </section>
 
-            </section>
         </div>
         </main>
-
-        <div class="ad-sidebar">🔥🔥🔥Advertisement</div>
 
     </div> 
 
@@ -960,7 +829,7 @@
             <div class="footer-newsletter-section">
                 <div class="newsletter-info">
                     <h4>Join the Perspective</h4>
-                    <p>Get a direct, quiet alert sent straight to your inbox the second a new unfiltered student lesson drops.</p>
+                    <p>Get a direct, quiet alert sent straight to your inbox the second a new log drops.</p>
                 </div>
                 <form id="newsletter-form" class="newsletter-form">
                     <input type="email" name="email" required placeholder="Enter your email address" class="newsletter-input" id="subscriber-email">
@@ -988,163 +857,33 @@
     </footer>
 
    <script>
-        // --- 1. SUPABASE CONNECTION CONFIG ---
-        const SUPABASE_URL = "https://wuarlxxhfpvjzjkflzbg.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1YXJseHhoZnB2anpqa2ZsemJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjM5NDUsImV4cCI6MjA5NjI5OTk0NX0.EUYBiKzk7JcU6cJH9YMLGWUEY3sMBFbz0KLNouYQI_w";
-        
-        let supabaseClient = null;
-        
-        if (window.supabase) {
-            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-                auth: { persistSession: false }
-            });
-        }
-
-        let cloudMetrics = {};
-        let inAdBreak = false; // Persistent memory flag for intermediate ad states
 
         const articlesDatabase = [
             {
-                id: "jumping-new-city",
-                tag: "SOCIETY & MIND",
-                title: "Jumping Into A New City With Zero Plan",
-                excerpt: "Waiting for the perfect plan is a trap. Here is how survival instincts kick in when you take a blind leap into a completely fresh environment.",
+                id: "taking-a-break",
+                tag: "PEACE & HEALTH",
+                title: "Taking A Break",
+                excerpt: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>I enjoy walking more than taking a bus and this unlocked a new hobby of taking pictures of the sky or nature with my phone.<br><br><div class='article-meta'><span>5 min read</span></div>",
                 slides: [
-                    { headline: "<div style='text-align: center;'><a class='reel_video' href='https://www.facebook.com/share/r/1JQGzUzz6q/' target='_blank' rel='noopener noreferrer' onmouseover='this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';' onmouseout='this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';'><!-- Facebook SVG Icon --><svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M24 12.073C24 5.421 18.627 0 12 0S0 5.421 0 12.073C0 18.083 4.388 23.068 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.068 24 18.083 24 12.073z' fill='#ffffff'/></svg><span>Click For Summary Video</span></a></div><br>The Blind Leap", body: "Waiting for the perfect plan is a trap. Sometimes, the smartest thing you can do for your growth is to take a blind leap into a completely new environment—even if your residence status is still pending. When you force yourself into the deep end, your survival instincts kick in and you figure out the logistics on the fly.", img: "images/travel.jpg" },
-                    { headline: "<div style='text-align: center;'><a class='reel_video' href='https://www.facebook.com/share/r/1JQGzUzz6q/' target='_blank' rel='noopener noreferrer' onmouseover='this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';' onmouseout='this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';'><!-- Facebook SVG Icon --><svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M24 12.073C24 5.421 18.627 0 12 0S0 5.421 0 12.073C0 18.083 4.388 23.068 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.068 24 18.083 24 12.073z' fill='#ffffff'/></svg><span>Click For Summary Video</span></a></div><br>The Network Cheat Code", body: "Being an introvert doesn't mean you can afford to lock yourself away. When you are dropped into a massive, unfamiliar city, striking up a conversation with a returning student can save your life. Put pride aside, ask questions, and build a quick network—strangers hold the maps you didn't know you needed.", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "<div style='text-align: center;'><a class='reel_video' href='https://www.facebook.com/share/r/1JQGzUzz6q/' target='_blank' rel='noopener noreferrer' onmouseover='this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';' onmouseout='this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';'><!-- Facebook SVG Icon --><svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M24 12.073C24 5.421 18.627 0 12 0S0 5.421 0 12.073C0 18.083 4.388 23.068 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.068 24 18.083 24 12.073z' fill='#ffffff'/></svg><span>Click For Summary Video</span></a></div><br>Tech Adaptability", body: "A massive city with towering buildings and busy streets can overwhelm you instantly if you let it. Lean into your tech-savvy side immediately. Apps like Uber aren't luxuries when you're lost; they are essential navigation tools to get you where you need to be efficiently under pressure.", img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "<div style='text-align: center;'><a class='reel_video' href='https://www.facebook.com/share/r/1JQGzUzz6q/' target='_blank' rel='noopener noreferrer' onmouseover='this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';' onmouseout='this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';'><!-- Facebook SVG Icon --><svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M24 12.073C24 5.421 18.627 0 12 0S0 5.421 0 12.073C0 18.083 4.388 23.068 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.068 24 18.083 24 12.073z' fill='#ffffff'/></svg><span>Click For Summary Video</span></a></div><br>Strategic Co-Signing", body: "When school accommodation drags out for a week, standing alone at the gate gets you nowhere. Look for someone in the exact same boat and team up. Splitting the cost of a basic, single-bed BnB room keeps you off the streets and pools your capital while you hunt for private housing daily.", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "<div style='text-align: center;'><a class='reel_video' href='https://www.facebook.com/share/r/1JQGzUzz6q/' target='_blank' rel='noopener noreferrer' onmouseover='this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';' onmouseout='this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';'><!-- Facebook SVG Icon --><svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M24 12.073C24 5.421 18.627 0 12 0S0 5.421 0 12.073C0 18.083 4.388 23.068 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.068 24 18.083 24 12.073z' fill='#ffffff'/></svg><span>Click For Summary Video</span></a></div><br>The Daily Expense Leak", body: "Watch those small coins because they add up incredibly fast. When you are stuck walking the streets looking for a flat with no kitchen to cook in, convenience is an expensive trap. Taking Ubers constantly and eating out for every single meal will completely eat through your capital before the semester even starts.", img: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "<div style='text-align: center;'><a class='reel_video' href='https://www.facebook.com/share/r/1JQGzUzz6q/' target='_blank' rel='noopener noreferrer' onmouseover='this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';' onmouseout='this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';'><!-- Facebook SVG Icon --><svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M24 12.073C24 5.421 18.627 0 12 0S0 5.421 0 12.073C0 18.083 4.388 23.068 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.068 24 18.083 24 12.073z' fill='#ffffff'/></svg><span>Click For Summary Video</span></a></div><br>The Emergency Fund Reality", body: "Tiredness will make you make financial moves under pressure. Securing a private flat usually means fronting a massive, unexpected security deposit. This is the moment you realize that having liquid capital or backing is the only thing standing between a secure room and another night on a shared hotel floor.", img: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "<div style='text-align: center;'><a class='reel_video' href='https://www.facebook.com/share/r/1JQGzUzz6q/' target='_blank' rel='noopener noreferrer' onmouseover='this.style.backgroundColor='#1565C0'; this.style.transform='scale(1.03)';' onmouseout='this.style.backgroundColor='#1877F2'; this.style.transform='scale(1)';'><!-- Facebook SVG Icon --><svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M24 12.073C24 5.421 18.627 0 12 0S0 5.421 0 12.073C0 18.083 4.388 23.068 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.068 24 18.083 24 12.073z' fill='#ffffff'/></svg><span>Click For Summary Video</span></a></div><br>Elevating Your Baseline", body: "Stepping out of a small hometown into a modern city block changes your entire perspective on life. The ultimate takeaway? Never let fear paralyze you from taking a massive risk. Pivot when things go wrong, guard your daily spending habits ruthlessly, and trust yourself to handle the chaos.", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" }
-                ]
-            },
-            {
-                id: "adulting-shock",
-                tag: "ACADEMICS & LIFESTYLE",
-                title: "Realities Of Being a College Student and Surviving The Mental Drain",
-                excerpt: "The shift from high school success to running an independent household while keeping up with class metrics is a massive shock. Here is how to keep the machine running.",
-                slides: [
-                    { headline: "The Responsibility Blindspot", body: "When mapping out your university strategy, it’s easy to focus solely on the academics. The trap is forgetting that you aren't just entering a higher level of education; you are entering independent survival. If you don't factor in the daily time needed to cook, clean, and manage your life, your perfect study schedule will crumble the moment reality hits.", img: "images/drained.jpg" },
-                    { headline: "The Ghost of Your Past Self", body: "Stop comparing your current output to the high school version of you. Back then, you had a built-in support system and zero domestic responsibilities. Competing with a past version of yourself who had nothing to do but study is unfair, unrealistic, and a guaranteed way to burn out before the first semester ends.", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "The Danger of Winging It", body: "In high school, you can get away with winging your schedule and hoping for the best. In varsity, that approach is academic suicide. When the back-to-back test weeks hit, a lack of a strict, comprehensive routine will leave you completely overwhelmed, paralyzing you to the point where you just sit and do nothing.", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "Active Escapism", body: "When the mental load gets too heavy, you need a healthy outlet to anchor you. Finding a physical hobby—like hitting the gym—isn’t a distraction from your studies; it is a necessary reset button for your brain. You need a space where your value isn't tied to a percentage or a grade.", img: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "The Peer Mirage", body: "It is incredibly draining to look at your peers studying day and night and ask yourself, 'Why don't I read like them?'. Understand this: everyone projects a certain image. Watching others pull all-nighters will make you feel like you are falling behind even when you are perfectly on track. Focus entirely on your own execution.", img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "The 'Wrong Question' Spiral", body: "When your mental health is weakened by self-doubt, every single question you get wrong feels like a definitive verdict that you know nothing. Do not let a single academic slip-up solidifying a false narrative in your head. A mistake is just data on what to fix, not a reflection of your intelligence.", img: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "The Power of Sonder", body: "No matter how heavy the imposter syndrome gets, never stop showing up. When you feel completely isolated in your struggle, look around the campus and remember the concept of Sonder. Every single person walking past you is fighting an invisible battle, dealing with their own chaos, and trying to figure it out too. You are absolutely not alone.", img: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80" }
-                ]
-            },
-            {
-                id: "silent-anxiety-freedom",
-                tag: "HEALTH & WEALTH",
-                title: "Navigating Silent Anxiety and Reclaiming Freedom",
-                excerpt: "When the academic engine glitches, physical anxiety can surprise you out of nowhere. Here is a strategy on how to ground your nervous system.",
-                slides: [
-                    { headline: "The Trap of Past Physical Baseline", body: "Your body changes under chronic academic stress. Trying to push yourself into high-intensity physical activity after a long hiatus—just because 'you used to do it easily'—is a massive shock to the system. When you ignore how much your academic routine has drained you, your body will eventually sound a severe alarm to force you to slow down.", img: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "The Day the Baseline Glitched", body: "A sudden, acute anxiety response is one of the most terrifying things a person can experience. When your heart suddenly races out of control, your vision narrows, and dizziness sets in, your mind instantly jumps to the worst-case scenario. In that moment of absolute panic, you have to find a way to ground yourself physically before your thoughts spiral completely out of reach.", img: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "Emergency Grounding Mechanics", body: "When your body enters a severe fight-or-flight response, you cannot argue with it using logic; you have to use physics. Elevating your feet to assist blood circulation and forcing yourself to lie still while focusing on the sky is a fundamental emergency reset. Learn basic physical grounding techniques—they are literal lifesavers when your nervous system overloads.", img: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "The Mind-Body Trust Fracture", body: "The worst part of a severe physical anxiety event is the aftermath. It breaks the trust between your mind and your body. Suddenly, the simple act of sitting down to read and absorb information can trigger a phantom heart-rate spike, simply because your brain begins to mistake deep mental focus for physical stress.", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "Naming the Silent Monster", body: "Anxiety is a word we hear on TV and social media constantly, but you never truly understand it until it hits you personally. Researching your symptoms and finally labelling what you are experiencing isn't a weakness—it’s the first step to taking your power back. When you name the monster, it loses its ability to surprise you.", img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" },
-                    { headline: "The 'Forced Exposure' Counter-Strategy", body: "When anxiety tries to make your world small and hyper-sensitive, your natural instinct is to hide away in your room. You have to aggressively fight that urge. Force yourself out of your comfort zone, put yourself in social spaces, talk to people, and actively break the isolation trap before burnout can set its roots.", img: "images/walk.jpg" },
-                    { headline: "The Cost of a Mental Reset", body: "As a student living on a tight budget, spending money on things that feel 'frivolous' or non-essential can make you feel guilty. But sometimes, paying for a solo outdoor activity or a quick escape into nature is a mandatory investment in your sanity. Solitary time away from your desk acts as a hard mental reset—it reminds you exactly what you are surviving and fighting for: your ultimate freedom.", img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80" }
-                ]
-            },             {
-                id: "truths-about-second-year",
-                tag: "ACADEMICS & HEALTH",
-                title: "Truths About Second-Year",
-                excerpt: "Learning from mistakes is a good skill to have, and getting over mistakes quickly is a must have skill because your future depends on it.",
-                slides: [
-                    { headline: "The Illusion of Safety", body: "Landing university accommodation feels like winning the lottery, and it removes a massive layer of survival stress. But don't let comfort breed complacency. The peace of mind of having a roof over your head can easily trick you into lowering your guard just as the academic stakes are about to double.", img: "images/dorm.jpg" },
-                    { headline: "The Two-Week Blitz", body: "Second year doesn't give you a grace period. In first year, you have time to ease into the syllabus; in second year, you are writing high-stakes tests within the first fourteen days. If you aren't mentally locked in from day one, the sheer pace of the curriculum will leave you playing catch-up before you've even bought your textbooks.", img: "images/intense.jpg" },
-                    { headline: "The End of 'Winging It' Marks", body: "In the past, you might have been able to pull a decent mark out of a hat even with mediocre preparation. Second year is a ruthless mirror—it gives you back exactly what you put in. The buffer zone is gone, and relying on raw talent without intense execution will result in a quick reality check.", img: "images/blur.jpg" },
-                    { headline: "The Administrative Nightmare", body: "The dumbest academic mistakes are often the most painful. Overlooking a module on your schedule and studying for the wrong test is a gut-wrenching feeling that will fill you with instant rage. You cannot afford to be disorganized; verify your exam codes and dates like your degree depends on it—because it does.", img: "images/shock.jpg" },
-                    { headline: "The 5% Grace", body: "When an administrative blunder causes you to completely tank a test, you have to learn the art of the quick pivot. Take a breath and look at the math. If it’s only worth 5% of your year mark, brush it off as an expensive lesson. Forgive yourself for the mistake, lock down the strategy, and make sure it never happens again.", img: "images/red.png" },
-                    { headline: "The Body vs. The Mind Memory", body: "We often treat our minds and bodies as separate entities, but they keep score of each other's stress. When you are pushing your brain to absorb massive amounts of complex information under pressure, your baseline stress is already high. If you try to force your body to perform like it did months ago without building back up, the system will glitch.", img: "images/stress.jpg" },
-                    { headline: "Optimism Under Fire", body: "Staying optimistic in university isn't about pretending everything is perfect; it’s about knowing you can survive the chaos. When reality hits you from multiple angles, the goal is to ground yourself in the present moment. You are getting older, the stakes are getting higher, but you are also getting significantly stronger.", img: "images/student.png" }
+                    { headline: "<div style='text-align: center;'>Walking as a Hobbie</div>", body: "One of my favourite things to do is to walk around town (whether it be night or day) or just anywhere with an amazing scenery, and capture a bunch of pictures with my phone. I do this when I'm bored or simply tired of being indoors for like a week. Because I do most things alone— I sometimes just come up with something random to do— like going to the grocery store, but instead of going to a store that's 5 minutes away I choose to go to one that's like 60 minutes away. I guess you can say that walking is one of my hobbies.", img: "images/travel.jpg" },
+                    { headline: "<div style='text-align: center;'>Discovering new Places</div>", body: "It might sound weird to some but this brings me peace of mind— feeling the breeze and the warmth of the sun makes it all the more worth it— plus I get to discover new places by walking down paths I've never walked before (which I do a lot by the way!). I have discovered so many parks doing this and at times I just sit and just relax for a while before moving to my destination.", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "<div style='text-align: center;'>The Mind of an Overthinker</div>", body: "I don't know if this applies to everyone, but for me personally— I feel like sitting and doing nothing gets me tired than going out and moving my legs. At times it is essential to do absolutely nothing and be with you thoughts, like meditating for example, but for me personally I just don't actively meditate because I end up overthinking about something that happened 10 year ago— which is funny now that I think of it.", img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80" },
+                    { headline: "<div style='text-align: center;'>Touching Some Grass</div>", body: "I learned that taking a walk in nature or just touching some grass resets my focus, not in the sense of a temporary focus but more like it brings me back to the path of the plan I have laid out for the upcoming 10 years of my life. As an introvert myself I feel like this is an easy thing that anyone can just do without feeling overwhelmed or the need of having a friend in order to have fun. ", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80" }
                 ]
             },
 
-                                                       {
-                id: "unlocking-your-mind",
-                tag: "LIFESTYLE & HEALTH",
-                title: "Smart Ways To Unlock Your Mind",
-                excerpt: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>Life is unpredictable and wont always be fun and games, and how you navigate your daily life can be a huge win for your future self.",
+                        {
+                id: "how-hard-can-it-be",
+                tag: "TIME MANAGEMENT & HABITS",
+                title: "How Hard Can It Be?",
+                excerpt: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>Managing your time across 14 subjects is a piece of cake— so I thought!<br><br><div class='article-meta'><span>6 min read</span></div>",
                 slides: [
-                    { headline: "The New Stranger", body: "Anxiety hits like a software update you never asked for, introducing you to a terrifying version of your own mind. When you don't have a label for the panic, you feel entirely defenceless against it, trapped in a chaotic loop you can't identify. Finding out what it actually is can be incredibly scary, but naming the beast is the very first step toward taming it.<div class='tip-box'>You cannot control a problem until you first learn to give it a name.</div>", img: "images/anxious.jpg" },
-                    { headline: "The Emotional Pendulum", body: "The scariest part of this condition is how fast it can hijack your peace of mind, swinging you from genuine joy to deep sadness in a matter of seconds. When you are in a good headspace, you look back at your past panic and feel completely confused about why you were stressing over nothing. It proves that the threat isn't actually happening out in the world; it's a temporary weather storm passing through your brain.<div class='tip-box'>Never let a brief emotional storm convince you that your entire life is under water.</div>", img: "images/happy.jpg" },
-                    { headline: "Fact vs. Fiction", body: "Overthinking is a dangerous master storyteller that can weave a lie so convincing you start believing it's the absolute truth. When your mind takes off on its own, you have to actively build a bridge back to solid ground before you get lost in the noise. For me, putting on a pair of headphones, diving into music, and forcing myself to look at cold, hard facts is the ultimate reality check.<div class='tip-box'>Turn up the music and tune out the narrative your brain is trying to manufacture.</div>", img: "images/factvsfiction.jpg" },
-                    { headline: "The Paradox of Tomorrow", body: "The future is a strange beast that can simultaneously terrify you and fuel your ambition all at the same time. It is a massive blank canvas that invites anxiety because it's completely unpredictable, but it also represents the ultimate prize. That fear isn't necessarily a stop sign; it is a signal that you are chasing a version of life that genuinely matters to you.<div class='tip-box'>Use the uncertainty of the future as a spark for your ambition rather than fuel for your fear.</div>", img: "images/fear.jpg" },
-                    { headline: "The Campus Forge", body: "They always say that higher education is the ultimate phase for self-discovery, but they rarely mention how painful that process actually is. It is a brutal environment where you are forced to confront your limits, navigate mental health hurdles, and figure out who you are under pressure. But through all the friction, the ultimate goal remains unchanged: securing the absolute freedom to move and live on your own terms.<div class='tip-box'>Accept the growing pains of this chapter because they are shaping the person who will achieve your dreams.</div>", img: "images/free.jpg" },
-                    { headline: "The Antidote to Comparison", body: "Comparing your behind-the-scenes struggles to everyone else's highlight reel is a guaranteed recipe for a mental breakdown. Instead of looking sideways to compete, look sideways to realize that every single person walking past you is fighting a hidden battle of their own. Embracing this sense of sonder reminds you that you aren't an isolated anomaly; you are just human.<div class='tip-box'>Shift your gaze from comparison to empathy to remind yourself that you are never walking alone.</div>", img: "images/comparison.jpg" },
-                    { headline: "The Daily Appearance", body: "At the end of the day, mental grounding isn't a one-size-fits-all formula, and what heals one person might not work for the next. The secret isn't finding a magical, permanent cure; it's about building a personalized toolkit of positive thoughts and coping mechanisms that work for you. No matter how loud the internal noise gets, the most powerful thing you can do is lock your eyes on the good stuff and simply keep showing up.<div class='tip-box'>Focus on your own unique coping strategies and never stop betting on yourself.</div>", img: "images/positivity.jpg" }
-                ]
-            },
-
-                                                        {
-                id: "daily-engine",
-                tag: "LIFESTYLE & HEALTH",
-                title: "Illusion of working 24/7",
-                excerpt: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>Forcing yourself to do what does not work for you is a recipe for disaster.",
-                slides: [
-                    { headline: "The Myth about an Engineering Student", body: "The world looks at an engineering student and expects a robot capable of processing data and staring at textbooks 24/7. But the brutal reality of higher education is that you aren't just processing complex formulas; you are processing a wave of heavy, unfamiliar adult emotions for the first time in your life. High school was simple because the path was paved and your headspace was clear, but university forces you to build the road while fighting your own mind.<div class='tip-box'>Give yourself permission to be human, because you cannot engineer a life if you burn out the engine.</div>", img: "images/joy.jpg" },
-                    { headline: "The Heavy Silence of Empty Days", body: "Going days without touching a single book is a uniquely draining kind of exhaustion. It’s a quiet, invisible quicksand where the less you do, the heavier the guilt becomes, dragging you down until you have absolutely no fight left in you. The paralysis itself takes up more mental energy than actual studying ever would, leaving you completely depleted without having covered a single chapter.<div class='tip-box'>Recognize that the fatigue from guilt is often heavier than the fatigue from actual work.</div>", img: "images/guilt.jpg" },
-                    { headline: "Breaking the Echo Chamber", body: "When you are already down, looking sideways at your peers who seem to be studying their hearts out is like pouring gasoline on an emotional fire. It triggers a phantom stress that doesn't push you to work; instead, it paralyzes you further, extending your unproductive streak and feeding a vicious, toxic loop. The moment you learn to aggressively brush off those comparison thoughts is the exact moment you reclaim your peace of mind.<div class='tip-box'>Shut out the noise of how fast others are running so you can focus on your own rhythm.</div>", img: "images/others.jpg" },
-                    { headline: "Rebranding the Defeat", body: "There is a massive strategic difference between lazily avoiding work and intentionally declaring a rest day. When you stop fighting the exhaustion and officially label a zero-percent day as a mandatory recharge period, the paralyzing guilt instantly evaporates. That mental clearance is what transforms a day of defeat into a reservoir of excess, explosive energy for the next morning.<div class='tip-box'>Turn your unproductive days into intentional rest so they can feed your tomorrow instead of starving your today.</div>", img: "images/overjoyed.jpg" },
-                    { headline: "The Efficiency Premium", body: "We have been conditioned to believe that academic success is measured by the hours you spend agonizing at a desk. But staring blankly at a single page for five hours with a fried brain is just theater—it’s an illusion of productivity that yields absolutely nothing. A sharp, hyper-focused 30-minute sprint at peak energy will always destroy a half-hearted, exhausted marathon.<div class='tip-box'>Measure your progress by the depth of your focus, not the length of your suffering.</div>", img: "images/staring.jpg" },
-                    { headline: "The Hardest Fact on the Table", body: "When the internal narrative gets completely chaotic and you start doubting your place, you have to look at the unshakeable reality of your situation. You did not accidentally wind up at a university hours and hours away from the comfort of home; you are there because you earned the right to be there. That geographical distance is living, breathing proof of your capability and your purpose.<div class='tip-box'>When your mind starts lying to you, anchor yourself to the undeniable fact of how far you’ve already come.</div>", img: "images/student.png" },
-                    { headline: "The Blueprint of the Pivot", body: "At the end of the day, navigating a heavy workload isn't about maintaining a flawless, unbroken streak of perfection. It is about mastering the art of the pivot—knowing exactly when to push through the friction and when to step away to save your sanity. As long as you keep your eyes locked on the ultimate goal and refuse to let the off-days define your trajectory, you are still moving forward.<div class='tip-box'>Accept that stopping is a part of the process, but always ensure your breaks serve your eventual comeback.</div>", img: "images/happystudy.jpg" }
+                    { headline: "<div style='text-align: center;'>Good O'l Times</div>", body: "I remember back in high school when I used to be care free. I used to just 'be fun' and a literal extrovert, but of course that wasn't really me— it was all puberty and peer pressure (I'd like to think). Then I grew up and started taking school seriously but even then I only focused on two to three subjects out of seven for the entire year. To be specific— those subjects were Math, Science and Mechanical Technology.", img: "images/free.jpg" },
+                    { headline: "<div style='text-align: center;'>This is Reality!</div>", body: "I then came to university with my 'two to three subject but willing to focus on all' mentality. If I can handle three subjects then 14 subjects is nothing (LOL)— that's what I said while I was looking at all my modules for the year. I soon found out first-hand why that one smart kid in high school used to always be face planted in their books.", img: "images/my_study.jpg" },
+                    { headline: "<div style='text-align: center;'>True Suffering</div>", body: "If you have ever— at least once in your life— studied a completely different subject to the one you're about to write a test on— and found out just minutes before the test begins then you know what true suffering feels like. I have never been one to manage my time— I used to study whatever I felt like studying and that usually translated to studying that one subject that I liked.", img: "images/intense.jpg" },
+                    { headline: "<div style='text-align: center;'>My Lost Creation</div>", body: "This time I jumped straight to creating a study schedule—something I've never done before. It was fun to create the timetable but it soon became very overwhelming to follow— and yet people make it look easy. Months later and I'm still doing some trial and error trying to find the sweet spot in managing my time, but I have slightly improved.", img: "images/schedule.jpeg" }
                 ]
             }
-
-
-            //,                                             {
-            //     id: "realisation-about-the-mind",
-            //     tag: "LIFESTYLE & HEALTH",
-            //     title: "Realisations About a Student's Mind",
-            //     excerpt: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>Learning from mistakes is a good skill to have, and getting over mistakes quickly is a must have skill because your future depends on it.",
-            //     slides: [
-            //         { headline: "The Morning Saboteur", body: "You wake up with a clean slate, ready to conquer the day, but your mind has other plans. It drags up a ghost from weeks ago—a question you got wrong, a deadline you postponed, or a string of unproductivity—and suddenly, the day crumbles before it even begins. You are paralyzed by the weight of your past hours before the sun is even down.<div class='tip-box'>Stop letting yesterday’s mistakes audition for a role in today’s performance.</div>", img: "images/dorm.jpg" },
-            //         { headline: "The Multi-Tasking Trap", body: "When you finally force yourself to pick up a book, the mental static kicks in. Your brain starts looping the dangerous lie that you are moving too slow, whispering that you should be covering three subjects simultaneously instead of mastering the one in front of you. This internal panic creates a friction that burns all your energy before you even read a page.<div class='tip-box'>Focus entirely on one subject at a time, because half-learning three things equals knowing nothing.</div>", img: "images/intense.jpg" },
-            //         { headline: "The Illusion of 'Later'", body: "When the overwhelm wins, you retreat into the comfort of a tomorrow that never comes. You tell yourself you’ll start when the energy hits or when the clock strikes a specific hour, but waiting for the perfect mood is just procrastination in a fancy coat. The longer you wait for inspiration, the deeper you sink into the couch.<div class='tip-box'>Action creates the energy, so don't wait for the mood to strike before you make a move.</div>", img: "images/blur.jpg" },
-            //         { headline: "The Reset Button", body: "When the mental beating becomes too brutal to push through, the smartest tactical move is to wave the white flag and declare an official off-day. For an introvert, salvation isn't found in a crowded room; it’s found in taking the long route to the store, sitting in a quiet park, and grabbing an ice cream to completely flush the toxic energy out of your system.<div class='tip-box'>When your mind is drowning in noise, step outside and let a change of scenery clear your head.</div>", img: "images/shock.jpg" },
-            //         { headline: "The 30-Minute Overflow", body: "Stepping away entirely has a strange way of unlocking an unexpected surge of late-night motivation. When you stop forcing the issue, the pressure drops, and suddenly you actually want to look at your notes. You quickly realize that 30 minutes of high-intensity, willing focus beats 5 hours of staring blankly at a page trying to force a breakthrough.<div class='tip-box'>Prioritize the quality of your focus over the quantity of hours spent agonizing at your desk.</div>", img: "images/red.png" },
-            //         { headline: "The Reality Check", body: "When the deadline is urgent and running away isn't an option, you have to interrogate your own brain. Strip away the panic, look at the cold facts, and ask yourself if your stress is rooted in reality or if you just manufactured a crisis in your mind two seconds ago. Beating yourself up has a 0% success rate for solving engineering problems.<div class='tip-box'>Separate your current emotional panic from the actual facts of the workload.</div>", img: "images/stress.jpg" },
-            //         { headline: "Fake It Til' You Focus", body: "When your brain resists the work, you have to trick it into motion by lowering the barrier to entry. Start by answering a simple question you already know, summarizing a familiar concept, or promising yourself you will only do one single problem before quitting. More often than not, that one easy problem breaks the paralysis, and you end up solving five without even realizing it.<div class='tip-box'>Build your momentum on small, guaranteed victories to silence the doubt.</div>", img: "images/student.png" }
-            //     ]
-            // }
-
-            //,                         {
-            //     id: "price-of-habit",
-            //     tag: "FINANCE & WEALTH",
-            //     title: "The Price of the Habit",
-            //     excerpt: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>We decide to save once the real salary hits our accounts, and that is a huge mistake.",
-            //     slides: [
-            //         { headline: "The Cents in the Account", body: "University gives you a brutal, front-row ticket to the reality of living paycheck to paycheck, where seeing single-digit cents in your bank account becomes a normal Tuesday. Financial Gurus always speak of the golden rule of "paying yourself first," but they clearly haven't tried doing that on a textbook-and-groceries budget. When the money hits your account and immediately vanishes into thin air just to cover the bare essentials, saving feels less like a strategy and more like a luxury you can't afford.<div class='tip-box'>Don't beat yourself up for struggling to apply corporate wealth advice to a survival-mode budget.</div>", img: "images/dorm.jpg" },
-            //         { headline: "The Penny Discouragement", body: "When your entire monthly surplus amounts to just a few stray coins, the motivation to slide them into a savings account completely dies. It is incredibly discouraging to look at a microscopic balance and think that these pennies won't ever stack up fast enough to build a real emergency fund in this economy. The temptation to just give up and spend every final cent on immediate comforts is real, because the reward for saving feels totally insignificant.<div class='tip-box'>Stop looking at the tiny amount you save and start focusing entirely on the action itself.</div>", img: "images/intense.jpg" },
-            //         { headline: "The Sandbox Phase", body: "The real secret of the student financial struggle is that university is a low-stakes training ground designed to teach you how to handle money while the numbers are still small. It is the absolute best time to make catastrophic financial decisions, suffer the minor consequences, and adjust your behaviour before a real corporate salary lands in your lap. Messing up a budget of hundreds is a cheap lesson compared to messing up a budget of thousands when real-world responsibilities are on the line.<div class='tip-box'>Treat your current financial tightrope as a practice run where mistakes are just tuition fees for real-world wisdom.</div>", img: "images/blur.jpg" },
-            //         { headline: "Automating the Muscle", body: "Those pennies you manage to tuck away every month aren't actually there to buy you a house or fund an investment portfolio right now; they are there to build a psychological muscle. If you cannot find a way to save R10 out of a hundred, you will never find the discipline to save ten thousand out of a hundred thousand later on. Building the habit now ensures that when real money finally hits your account, the concept of paying yourself first won't feel overwhelming or foreign.<div class='tip-box'>Save the small change today solely to build the unstoppable discipline you will need tomorrow.</div>", img: "images/shock.jpg" },
-            //         { headline: "Cannibalizing the Fund", body: "The path to financial discipline is never a clean, straight line, and there will be months where you completely fail and eat through every single cent of the savings you built up. Raiding your own emergency fund because things got too tight is a frustrating setback, but it is a fundamental part of the learning curve. Experiencing that setback firsthand forces you to look at exactly how hard it truly is to preserve capital, pushing you to analyze where the leak happened.<div class='tip-box'>Expect to crash your budget occasionally, but use every wipeout to inspect and fortify your financial defence.</div>", img: "images/red.png" },
-            //         { headline: "The Lifestyle Blueprint", body: "Every time you break your budget or have to rebuild from zero, you gain invaluable data on your own spending triggers and lifestyle demands. There is no one-size-fits-all financial blueprint, and navigating these tight years allows you to test different cash-management methods until you find what fits your personality. Over time, these continuous adjustments turn you from a passive spender into a master of your own cash flow.<div class='tip-box'>Customize your saving tactics around your actual daily habits rather than trying to follow someone else's perfect formula.</div>", img: "images/stress.jpg" },
-            //         { headline: "The Long Game Preparation", body: "At the end of the day, you have to completely detach your emotional worth from the size of your current bank balance. Saving a minuscule amount every month might feel pointless right now, but you are playing a much longer, strategic game of future preparation. Every small sacrifice is an investment in the mindset of the person you are actively becoming—someone who will know exactly how to protect their wealth when the real paychecks start rolling in.<div class='tip-box'>Never look down on the small amounts you save, because a small habit forms the foundation of big financial freedom.</div>", img: "images/student.png" }
-            //     ]
-            // }
-
-            //,                         {
-            //     id: "habit-of-investing",
-            //     tag: "FINANCE & WEALTH",
-            //     title: "The Leverage of Decades",
-            //     excerpt: "<div class='newcontent-card-top-row'><p class='new-content'>NEW</p></div>Telling yourself that you will start investing once you earn real money is a trap. Start building the habit now!",
-            //     slides: [
-            //         { headline: "The Capital of Time", body: "As a student trapped on a paper-thin budget, it is easy to assume that you lack the financial qualifications to enter the world of investing. But the hard truth is that your absolute most valuable asset isn't the amount of money in your wallet; it is the massive runway of time you have ahead of you. While Wall Street multi-millionaires can buy larger blocks of stock, they cannot buy back their twenties—a window where compounding returns do the heaviest lifting.<div class='tip-box'>Stop waiting for a massive windfall to start, because your youth is a financial leverage that money simply cannot buy.</div>", img: "images/dorm.jpg" },
-            //         { headline: "Time in the Market", body: "You have probably heard the golden market rule a thousand times: "Time in the market beats timing the market." Trying to guess the exact moment prices will hit rock bottom before buying is a loser's game that even professionals mess up. By simply getting your money into the market early and leaving it untouched, you let the natural, long-term upward trajectory of global economics do the hard work for you.<div class='tip-box'>Focus on how long your money stays in the market rather than trying to guess when the perfect time to enter is.</div>", img: "images/intense.jpg" },
-            //         { headline: "The Difference between Investing & Trading", body: "Most students completely butcher the boundary between these two worlds, treating them as if they are the exact same thing. Trading is a high-stress, short-term gamble where you constantly buy and sell assets over days or hours, chasing quick profits from market chaos—essentially treating the stock market like a casino. Investing, on the other hand, is a disciplined, long-term marriage where you buy high-quality assets and hold them for decades, letting the underlying value grow steadily over time.<div class='tip-box'>Be an investor building a lasting foundation for freedom, not a trader burning energy chasing a volatile jackpot.</div>", img: "images/blur.jpg" },
-            //         { headline: "The Power of the Fraction", body: "The days when you needed a massive pile of cash just to purchase a single, full share of a top-tier company or global fund are completely dead. Thanks to fractional investing, you can now slice a single share into tiny, budget-friendly pieces, allowing you to buy into major companies with whatever spare change you have left over. This shift has completely leveled the playing field, making wealth creation accessible to anyone with a phone and a few rands to spare.<div class='tip-box'>Take advantage of fractional shares to start building ownership in big ideas without needing a big bank account.</div>", img: "images/shock.jpg" },
-            //         { headline: "The Low-Stakes Sandbox", body: "Plunging into the market with double-digit amounts gives you a bulletproof, low-stakes environment to make your rookie financial blunders. It is infinitely better to lose a tiny percentage of a student budget while learning how market cycles work than to make those identical errors later with your life savings. This is your safe zone to experience market drops, test your nerve, and iron out your flaws before anyone else’s livelihood depends on your financial judgment.<div class='tip-box'>Use your lean student years to commit your unavoidable investment mistakes while the tuition fee is still dirt cheap.</div>", img: "images/red.png" },
-            //         { headline: "Engineering Your Rules", body: "Investing without a concrete set of personal boundaries is a guaranteed way to lose your shirt to emotional panic and market hype. Starting small allows you to systematically build, test, and refine your own personal trading rules and asset allocation strategies in real-time. By documenting what works and what triggers your panic, you transition from an emotional speculator into a calculated machine that executes a plan without emotion.<div class='tip-box'>Build and lock down your investment rules today so you don't default to emotional panic tomorrow.</div>", img: "images/stress.jpg" },
-            //         { headline: "Scaling the Strategy", body: "The ultimate goal of starting your investment journey during your university years is to build an unshakeable, automated routine. When you graduate and the real corporate salary finally hits your account, you won’t have to waste time figuring out how the market works or paralyze yourself with fear over where to put your cash. You simply take the exact same strategy you perfected with pennies, slide the slider up, and inject larger sums into an engine you already trust.<div class='tip-box'>Master the mechanics of investing while you are broke, so scaling up is just a matter of adding zeros.</div>", img: "images/student.png" }
-            //     ]
-
-            // }
 
         ];
 
@@ -1164,68 +903,6 @@
         const leftArrowBtn = document.getElementById("left-arrow-btn");
         const rightArrowBtn = document.getElementById("right-arrow-btn");
 
-        const viewCounterNode = document.getElementById("view-counter-node");
-        const likeBtnNode = document.getElementById("like-btn-node");
-        const likeLabelNode = document.getElementById("like-label-node");
-        const likeCounterNode = document.getElementById("like-counter-node");
-
-        function formatMetric(num) {
-            if (!num || isNaN(num)) return "0";
-            if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-            if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-            return num.toString();
-        }
-
-        articlesDatabase.forEach(a => { 
-            cloudMetrics[a.id] = { views: 0, likes: 0, completions: 0 }; 
-        });
-
-        async function fetchGlobalMetrics() {
-            if (!supabaseClient) return;
-            try {
-                const { data, error } = await supabaseClient.from('story_metrics').select('*');
-                if (error) throw error;
-                if (data) {
-                    data.forEach(row => {
-                        cloudMetrics[row.story_id] = { 
-                            views: Number(row.views) || 0, 
-                            likes: Number(row.likes) || 0,
-                            completions: Number(row.completions) || 0
-                        };
-                    });
-                }
-            } catch (err) {
-                console.warn("Database framework relying on local mirror memory:", err);
-            }
-        }
-
-        async function incrementCloudView(storyId) {
-            if (cloudMetrics[storyId]) cloudMetrics[storyId].views++;
-            if (!supabaseClient) return;
-            try {
-                await supabaseClient.rpc('increment_views', { row_id: storyId });
-            } catch(e) { console.error("Cloud logging fail:", e); }
-        }
-
-        async function adjustCloudLikes(storyId, incrementValue) {
-            if (!supabaseClient) return;
-            try {
-                await supabaseClient.rpc('adjust_likes', { row_id: storyId, val: incrementValue });
-            } catch(e) { console.error("Cloud log modification fail:", e); }
-        }
-
-        async function trackStoryCompletion(storyId) {
-            if (!supabaseClient) return;
-            const completedKey = `completed_session_${storyId}`;
-            if (sessionStorage.getItem(completedKey)) return;
-            try {
-                await supabaseClient.rpc('increment_completions', { row_id: storyId });
-                sessionStorage.setItem(completedKey, 'true');
-                if (cloudMetrics[storyId]) cloudMetrics[storyId].completions++;
-            } catch (error) {
-                console.error("Failed to commit milestone payload:", error);
-            }
-        }
 
     function renderHomepageFeed() {
     if (!feedContainer) return;
@@ -1248,7 +925,6 @@
     //Loops through 'articlesToDisplay'
     articlesToDisplay.forEach((art, index) => {
         const isRead = localStorage.getItem(`read_${art.id}`) === "true";
-        const stats = cloudMetrics[art.id] || { views: 0, likes: 0 };
         
         const card = document.createElement("div");
         card.className = "article-card";
@@ -1261,54 +937,8 @@
             </div>
             <div class="article-title">${art.title}</div>
             <div class="article-excerpt">${art.excerpt}</div>
-            <div class="article-meta">
-                <span>8 min read</span> &middot; 
-                <span class="feed-metric-inline">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> ${formatMetric(stats.views)} views
-                </span> &middot;
-                <span class="feed-metric-inline">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> ${formatMetric(stats.likes)} likes
-                </span>
-            </div>
         `;
                 feedContainer.appendChild(card);
-
-                // Inline Organic Story Spacer Ad Injection 🔥🔥🔥
-                // if (index === 1) {
-                //     const adCard = document.createElement("div");
-                //     adCard.className = "article-card sponsored-ad-card";
-                //     adCard.innerHTML = `
-                //         <div class="card-top-row">
-                //             <div class="article-tag" style="background: #e0e0e0; color: #555; font-weight: 700;">🔥🔥🔥SPONSORED</div>
-                //             <div class="status-badge read" style="background: transparent; border: 1px solid currentColor;">Featured Partner</div>
-                //         </div>
-                //         <div class="article-title" style="opacity: 0.95;">Optimize Your Daily Workflow Workspace</div>
-                //         <div class="article-excerpt">Premium, distraction-free developmental setups designed specifically for high-output engineering minds. Upgrade your baseline focus engine today.</div>
-                //         <div class="article-meta">
-                //             <span style="font-weight: 600; letter-spacing: 0.05em;">PROMOTED LINK</span>
-                //         </div>
-                //     `;
-                //     adCard.onclick = (e) => { e.stopPropagation(); window.open("https://www.google.com", "_blank"); };
-                //     feedContainer.appendChild(adCard);
-                // }
-                //                 // Inline Organic Story Spacer Ad Injection
-                // if (index === 4) {
-                //     const adCard = document.createElement("div");
-                //     adCard.className = "article-card sponsored-ad-card";
-                //     adCard.innerHTML = `
-                //         <div class="card-top-row">
-                //             <div class="article-tag" style="background: #e0e0e0; color: #555; font-weight: 700;">🔥🔥🔥SPONSORED</div>
-                //             <div class="status-badge read" style="background: transparent; border: 1px solid currentColor;">Featured Partner</div>
-                //         </div>
-                //         <div class="article-title" style="opacity: 0.95;">Optimize Your Daily Workflow Workspace</div>
-                //         <div class="article-excerpt">Premium, distraction-free developmental setups designed specifically for high-output engineering minds. Upgrade your baseline focus engine today.</div>
-                //         <div class="article-meta">
-                //             <span style="font-weight: 600; letter-spacing: 0.05em;">PROMOTED LINK</span>
-                //         </div>
-                //     `;
-                //     adCard.onclick = (e) => { e.stopPropagation(); window.open("https://www.google.com", "_blank"); };
-                //     feedContainer.appendChild(adCard);
-                // }
             });
         }
 
@@ -1318,7 +948,6 @@
             if (articleView) articleView.style.display = "none";
             if (homeView) homeView.style.display = "block";
             activeArticle = null;
-            inAdBreak = false; 
             renderHomepageFeed();
             window.scrollTo(0,0);
         }
@@ -1327,90 +956,36 @@
             activeArticle = articlesDatabase.find(art => art.id === id);
             if (!activeArticle) return;
             activeSlideIndex = 0;
-            inAdBreak = false; 
             
             if (storyMainTitle) storyMainTitle.innerText = activeArticle.title;
             if (homeView) homeView.style.display = "none";
             if (articleView) articleView.style.display = "block";
 
             localStorage.setItem(`read_${activeArticle.id}`, "true");
-            await incrementCloudView(activeArticle.id);
-            
-            updateInteractiveMetricsUI();
             renderSlideState();
             window.scrollTo(0,0); 
-
-            renderDiscussionModule(activeArticle.id);
         }
 
-        function updateInteractiveMetricsUI() {
-            if (!activeArticle) return;
-            const stats = cloudMetrics[activeArticle.id] || { views: 0, likes: 0 };
 
-            if (viewCounterNode) viewCounterNode.innerText = formatMetric(stats.views);
-            if (likeCounterNode) likeCounterNode.innerText = formatMetric(stats.likes);
+function renderSlideState() {
 
-            const hasLiked = localStorage.getItem(`like_state_${activeArticle.id}`) === "true";
-            if (likeBtnNode && likeLabelNode) {
-                if (hasLiked) {
-                    likeBtnNode.classList.add("liked");
-                    likeLabelNode.innerText = "Liked";
-                } else {
-                    likeBtnNode.classList.remove("liked");
-                    likeLabelNode.innerText = "Like";
-                }
-            }
-        }
-
-        async function toggleLikeCurrentStory() {
-            if (!activeArticle) return;
-            const hasLiked = localStorage.getItem(`like_state_${activeArticle.id}`) === "true";
-            let incrementValue = 0;
-
-            if (hasLiked) {
-                localStorage.setItem(`like_state_${activeArticle.id}`, "false");
-                incrementValue = -1;
-            } else {
-                localStorage.setItem(`like_state_${activeArticle.id}`, "true");
-                incrementValue = 1;
-            }
-
-            if (cloudMetrics[activeArticle.id]) {
-                cloudMetrics[activeArticle.id].likes = Math.max(0, cloudMetrics[activeArticle.id].likes + incrementValue);
-            }
-            
-            updateInteractiveMetricsUI();
-            await adjustCloudLikes(activeArticle.id, incrementValue);
-        }
-
-        function renderSlideState() {
-    const totalSlides = activeArticle.slides.length;
-    
-    // Render the Virtual Interstitial Mid-Slide Ad Container (Fires on the 4th action window)
-    if (inAdBreak) {
-        if (progressTracker && mediaViewport && textViewport && megaActionBtn) {
-            progressTracker.innerText = `Advertisement`;
-            mediaViewport.className = "ad-break-stage";
-            mediaViewport.innerHTML = `<a href="https://www.facebook.com/profile.php?id=61591206983388" target="_blank" rel="noopener noreferrer"><img src="logo.png" alt="Follow On Facebook" width="400" height="400"></a>`;
-            
-            textViewport.innerHTML = `
-                <h3 class="slide-headline" style="text-align:center;">Don't Want To Miss A Lesson?</h3>
-                <p class="slide-body-text" style="text-align:center; color:var(--text-muted);">Click On The Image To Follow Me On Facebook and Get Notified!</p>
-            `;
-            megaActionBtn.innerHTML = "Skip Ad &rarr;";
-        }
-        if (leftArrowBtn) leftArrowBtn.disabled = false;
-        return;
-    }
-
-    const currentData = activeArticle.slides[activeSlideIndex];
+        const totalSlides = activeArticle.slides.length;
+        const currentData = activeArticle.slides[activeSlideIndex];
     
     if (progressTracker && mediaViewport && textViewport && megaActionBtn) {
         progressTracker.innerText = `Slide ${activeSlideIndex + 1} of ${totalSlides}`;
         mediaViewport.className = "slide-stage";
         
-        // 1. Render the main slide image first
-        mediaViewport.innerHTML = `<img src="${currentData.img}" alt="Visual Narrative" class="slide-img" id="stage-image">`;
+        if (currentData.vid) {
+            mediaViewport.innerHTML = `
+            <video autoplay muted loop playsinline preload="metadata" class="slide-img" id="stage-image">
+            <source src="${currentData.vid}">
+            Your browser does not support the video tag.
+            </video>`;
+        }   else if (currentData.img) {
+        mediaViewport.innerHTML = `
+        <img src="${currentData.img}" alt="Visual Narrative" class="slide-img" id="stage-image">`;
+}
         
         textViewport.innerHTML = `
             <h3 class="slide-headline">${currentData.headline}</h3>
@@ -1459,7 +1034,7 @@
             }
 
         } else {
-            megaActionBtn.innerHTML = "Next Lesson &rarr;";
+            megaActionBtn.innerHTML = "Next Log &rarr;";
         }
     }
     if (leftArrowBtn) leftArrowBtn.disabled = (activeSlideIndex === 0);
@@ -1467,18 +1042,6 @@
 
         // Handles transition states sequentially without breaking slide data mapping bounds
         function nextSlide() {
-            if (inAdBreak) {
-                inAdBreak = false;
-                activeSlideIndex++; // Safe transition directly onto Slide Index 4
-                renderSlideState();
-                return;
-            }
-            
-            if (activeSlideIndex === 3) { // After viewing the 4th slide (Index 3), inject ad break
-                inAdBreak = true;
-                renderSlideState();
-                return;
-            }
 
             if (activeSlideIndex === activeArticle.slides.length - 1) {
                 showHome();
@@ -1489,17 +1052,6 @@
         }
 
         function prevSlide() {
-            if (inAdBreak) {
-                inAdBreak = false;
-                renderSlideState(); // Falls back onto Slide Index 3 seamlessly
-                return;
-            }
-            
-            if (activeSlideIndex === 4) { // Catch backward transit and present the ad break step
-                inAdBreak = true;
-                renderSlideState();
-                return;
-            }
 
             if (activeSlideIndex === 0) return;
             activeSlideIndex--;
@@ -1540,11 +1092,11 @@
             const themeBtn = document.getElementById("theme-btn");
             if (currentTheme === "dark") {
                 document.documentElement.removeAttribute("data-theme");
-                if (themeBtn) themeBtn.innerText = "Dark Mode";
+                if (themeBtn) themeBtn.innerText = "Light Mode";
                 localStorage.setItem("theme", "light");
             } else {
                 document.documentElement.setAttribute("data-theme", "dark");
-                if (themeBtn) themeBtn.innerText = "Light Mode";
+                if (themeBtn) themeBtn.innerText = "Dark Mode";
                 localStorage.setItem("theme", "dark");
             }
         }
@@ -1556,12 +1108,9 @@
             if (localStorage.getItem("theme") === "dark") {
                 document.documentElement.setAttribute("data-theme", "dark");
                 const themeBtn = document.getElementById("theme-btn");
-                if (themeBtn) themeBtn.innerText = "Light Mode";
+                if (themeBtn) themeBtn.innerText = "Dark Mode";
             }
 
-            fetchGlobalMetrics().then(() => {
-                renderHomepageFeed(); 
-            });
         });
 
 
@@ -1689,149 +1238,153 @@ function applyTagFilters() {
     renderHomepageFeed(); 
 }
 
-
-
-// Open/Close switches for the complete layout list modal
-function openCommentsOverlay() {
-    document.getElementById('comments-modal-overlay').style.display = 'flex';
-}
-function closeCommentsOverlay() {
-    document.getElementById('comments-modal-overlay').style.display = 'none';
-}
-
-
-/**
- * Main Dynamic Loader: Run this inside your loadArticle(articleId) workflow!
- */
-async function renderDiscussionModule(articleId) {
-
-    activeArticleId = typeof articleId === 'object' && articleId !== null ? articleId.id : articleId;
-    
-    // 2. Fix the lookup: Find using the clean text string handle
-    const currentArticle = articlesDatabase.find(art => art.id === activeArticleId);
-    const promptTextEl = document.getElementById('prompt-text');
-    if (currentArticle && currentArticle.discussionPrompt) {
-        promptTextEl.innerText = currentArticle.discussionPrompt;
-        document.getElementById('dynamic-discussion-prompt').style.display = 'block';
-    } else {
-        promptTextEl.innerText = "What are your core takeaways, experiences, or stories surrounding the lessons in this piece?";
-    }
-
-    // Reset layout input fields
-    document.getElementById('comment-author').value = "";
-    document.getElementById('comment-body').value = "";
-
-    // 3. Your Supabase query now safely uses activeArticleId 
-    const { data: comments, error } = await supabaseClient
-        .from('comments')
-        .select('*')
-        .eq('article_id', activeArticleId)
-        .order('created_at', { ascending: false });
-
-    if (error) {
-        console.error("Error drawing Supabase comments:", error);
-        return;
-    }
-
-    // 3. Update the global numeric badge on your show-all toggle button
-    document.getElementById('comments-count-badge').innerText = comments.length;
-
-    // Targets
-    const latestTarget = document.getElementById('latest-comment-target');
-    const streamTarget = document.getElementById('modal-comments-stream');
-
-    // 4. Render Tier 1: The single latest comment preview card
-    if (comments.length === 0) {
-        latestTarget.innerHTML = `<p style="color: var(--text-muted); font-style: italic; font-size: 14px; margin: 0 0 1rem 0;">No thoughts shared yet. Be the first to start the conversation!</p>`;
-        streamTarget.innerHTML = `<p style="color: var(--text-muted); font-style: italic; font-size: 14px; text-align: center; padding: 2rem 0;">No perspectives posted yet.</p>`;
-        return;
-    }
-
-    // Isolate index 0 (the absolute latest comment)
-    const latest = comments[0];
-    latestTarget.innerHTML = `
-        <div style="background-color: rgba(128,128,128, 0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; animation: fadeIn 0.3s ease;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-                <strong style="font-size: 14px;">${escapeHtml(latest.author)}</strong>
-                <span style="font-size: 11px; color: var(--text-muted);">${new Date(latest.created_at).toLocaleDateString()}</span>
-            </div>
-            <p style="margin: 0; font-size: 14px; line-height: 1.5; opacity: 0.9;">${escapeHtml(latest.body)}</p>
-        </div>
-    `;
-
-    // 5. Render Tier 3: Show ALL responses sequentially inside the modal container scroll view
-    streamTarget.innerHTML = comments.map(c => `
-        <div style="border-bottom: 1px solid var(--border-color); padding: 1rem 0; &:last-child { border: none; }">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
-                <strong style="font-size: 14px;">${escapeHtml(c.author)}</strong>
-                <span style="font-size: 11px; color: var(--text-muted);">${new Date(c.created_at).toLocaleDateString()}</span>
-            </div>
-            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--text-color); opacity: 0.95; white-space: pre-wrap;">${escapeHtml(c.body)}</p>
-        </div>
-    `).join('');
-}
-
-/**
- * Handle submission from the baseline page boxes
- */
-async function handleCommentSubmission() {
-
-    const authorVal = document.getElementById('comment-author').value.trim();
-    const body = document.getElementById('comment-body').value.trim();
-
-    // If blank name, stamp it fallback Anonymous
-    const author = authorVal || "Anonymous";
-
-    if (!body) {
-        alert("Please write a text comment before submitting.");
-        return;
-    }
-
-    const { error } = await supabaseClient
-        .from('comments')
-        .insert([{ article_id: activeArticleId, author, body }]);
-
-    if (error) {
-        console.error("Supabase injection fail:", error);
-        alert("Failed to submit response.");
-    } else {
-        // Reload data to instantly update the screen display lines
-        renderDiscussionModule(activeArticleId);
-    }
-}
-
-/**
- * Handle submission from inside the hidden modal panel text boxes
- */
-async function handleModalCommentSubmission() {
-
-    const authorVal = document.getElementById('modal-comment-author').value.trim();
-    const body = document.getElementById('modal-comment-body').value.trim();
-
-    const author = authorVal || "Anonymous";
-
-    if (!body) return alert("Please type your message.");
-
-    const { error } = await supabaseClient
-        .from('comments')
-        .insert([{ article_id: activeArticleId, author, body }]);
-
-    if (error) {
-        console.error("Supabase modal submission error:", error);
-    } else {
-        document.getElementById('modal-comment-body').value = "";
-        document.getElementById('modal-comment-author').value = "";
-        // Refresh behind modal
-        renderDiscussionModule(activeArticleId);
-    }
-}
-
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.innerText = text;
     return div.innerHTML;
 }
 
+
+
+
+
+
+
+
+
+
+const audioBtn = document.getElementById('lofi-toggle');
+const footer = document.querySelector('footer');
+
+if (footer && audioBtn) {
+  let wasTouchingFooter = false;
+
+  function updateButtonPosition() {
+    const footerRect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Desired gap between the button and the top of the footer (in pixels)
+    const paddingAboveFooter = 20; 
+    const buttonHeight = audioBtn.offsetHeight;
+    
+    // Distance from the bottom of the screen to the top of the footer
+    const footerTopFromBottom = windowHeight - footerRect.top;
+
+    if (footerTopFromBottom > 24) { 
+      // The footer has reached or passed the button's default 24px bottom offset
+      
+      // Calculate exact bottom value to park it right above the footer
+      const newBottom = footerTopFromBottom + paddingAboveFooter;
+      audioBtn.style.bottom = `${newBottom}px`;
+
+      // Trigger the bounce animation the moment it first touches the footer
+      if (!wasTouchingFooter) {
+        wasTouchingFooter = true;
+        audioBtn.classList.remove('trigger-footer-bounce');
+        void audioBtn.offsetWidth; // Force reflow to re-trigger animation
+        audioBtn.classList.add('trigger-footer-bounce');
+      }
+
+    } else {
+      // Normal fixed position when away from the footer
+      audioBtn.style.bottom = '24px';
+      audioBtn.classList.remove('trigger-footer-bounce');
+      wasTouchingFooter = false;
+    }
+  }
+
+  // Listen to active scrolling and window resizing
+  window.addEventListener('scroll', updateButtonPosition, { passive: true });
+  window.addEventListener('resize', updateButtonPosition);
+}
+
+
+// --- 1. Playlist Setup ---
+const playlist = [
+  'audio/bloomintheroom.mp3',
+  'audio/unfinishedletters.mp3',
+  'audio/thebookleftopen.mp3',
+  'audio/undertheporchlight.mp3'
+];
+
+let currentTrackIndex = 0;
+const audio = new Audio(playlist[currentTrackIndex]);
+let isPlaying = false;
+let fadeInterval = null;
+
+const audioIcon = document.getElementById('audio-icon');
+
+const TARGET_VOLUME = 0.10; // 10% volume target
+const FADE_DURATION = 1500; // 1.5 second fade duration
+
+// --- 2. Playlist Loop Listener ---
+audio.addEventListener('ended', () => {
+  currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+  audio.src = playlist[currentTrackIndex];
+  audio.volume = TARGET_VOLUME;
+  audio.play();
+});
+
+// --- 3. Animation Classes ---
+const animations = ['anim-bounce', 'anim-shake', 'anim-pulse-wobble'];
+
+// --- 4. Smooth Fade Helpers ---
+function fadeInAudio() {
+  clearInterval(fadeInterval);
+  audio.volume = 0;
+  audio.play().catch(err => console.log('Playback error:', err));
+
+  const step = TARGET_VOLUME / (FADE_DURATION / 50);
+  fadeInterval = setInterval(() => {
+    if (audio.volume + step < TARGET_VOLUME) {
+      audio.volume += step;
+    } else {
+      audio.volume = TARGET_VOLUME;
+      clearInterval(fadeInterval);
+    }
+  }, 50);
+}
+
+function fadeOutAudio() {
+  clearInterval(fadeInterval);
+  const step = audio.volume / (FADE_DURATION / 50);
+
+  fadeInterval = setInterval(() => {
+    if (audio.volume - step > 0.01) {
+      audio.volume -= step;
+    } else {
+      audio.volume = 0;
+      audio.pause();
+      clearInterval(fadeInterval);
+    }
+  }, 50);
+}
+
+// --- 5. Button Click Handler ---
+audioBtn.addEventListener('click', () => {
+  if (!isPlaying) {
+    // Turning ON
+    isPlaying = true;
+    audioIcon.textContent = '🔉';
+
+    // Choose 1 of 3 random animations
+    const randomAnim = animations[Math.floor(Math.random() * animations.length)];
+    audioBtn.classList.add(randomAnim);
+
+    // Stop animation after exactly 3 seconds, then start fade-in
+    setTimeout(() => {
+      audioBtn.classList.remove(...animations);
+      fadeInAudio();
+    }, 3000);
+
+  } else {
+    // Turning OFF
+    isPlaying = false;
+    audioIcon.textContent = '🔇';
+    audioBtn.classList.remove(...animations); // Instant stop to any active animation
+    fadeOutAudio();
+  }
+});
 
 
 // Run this immediately when the page loads
@@ -1847,24 +1400,6 @@ window.addEventListener('DOMContentLoaded', () => {
         // 3. Otherwise, load default homepage view
         showHome(); // Homepage loading function
     }
-});
-
-// Universal Page Bootstrapper
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Give your main layout engine half a second to finish loading the initial article text
-    setTimeout(() => {
-        // 2. Check if a global article object or active state is defined on your page
-        // (Adjust 'activeArticle' if your main script uses a different variable name like 'currentArticle')
-        if (typeof activeArticle !== 'undefined' && activeArticle !== null) {
-            console.log("Bootstrapper waking up comment feed for:", activeArticle);
-            renderDiscussionModule(activeArticle);
-        } else {
-            // Fallback: If the global variable isn't ready, try using the first item in your database array
-            if (typeof articlesDatabase !== 'undefined' && articlesDatabase.length > 0) {
-                renderDiscussionModule(articlesDatabase[0]);
-            }
-        }
-    }, 400); // 400ms delay ensures your HTML nodes are fully built and ready to receive text
 });
 </script>
 </body>
